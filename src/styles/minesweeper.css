@@ -1,11 +1,13 @@
 .minesweeper {
-    max-width: 600px;
+    max-width: 500px;
     background-color: lightblue;
+    border-radius: 8px;
+    border: 1px solid brown;
     padding: 20px 10px;
     margin: 0px auto;
 }
 .title {
-    width: 380px;
+    width: 350px;
     text-align: center;
     background-color: whitesmoke;
     border: 1px solid brown;

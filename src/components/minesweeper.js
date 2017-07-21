@@ -21,21 +21,25 @@ export default class Minesweeper extends React.Component {
   
 
   plantMines(numberOfMines){
-    for(let i = 0; i < numberOfMines; i++){
+    let mineLocations = new Set;
+    while (mineLocations.size < 10) {
       let XY = randomSquare(this.state.widthX, this.state.lengthY);
-      console.log('xy: ', XY[0], XY[1]);
+      console.log(this.state.minefield[XY[0]][XY[1]].hasMine);
       this.state.minefield[XY[0]][XY[1]].hasMine = true;
-      console.log(this.state.minefield[XY[0]][XY[1]]);
+      mineLocations.add(XY);
+      console.log(mineLocations);
     }
   }
+  
 
   render() {
     this.plantMines(this.state.numberOfMines);
+    console.log(this.state.minefield[4][7].hasMine, this.state.minefield[4][8].hasMine);
     return (
       <div className="minesweeper">
         <div className="title">
           <h1>Minesweeper</h1>
-          <span>Mega Bomberman's Little Brotherman</span><br />
+          <span>Mega Bomberman's Little Brother</span><br />
         </div>
         <div className="minefield">
           <Minefield rows={this.state.minefield}/>
@@ -48,9 +52,9 @@ export default class Minesweeper extends React.Component {
 let randomSquare = (X, Y) => {
   let xValue = Math.floor(Math.random() * X);
   let yValue = Math.floor(Math.random() * Y);
-  console.log('X', xValue);
-  console.log('Y', yValue);
   let XY = [xValue, yValue];
   return XY;
 }
+
+
 
