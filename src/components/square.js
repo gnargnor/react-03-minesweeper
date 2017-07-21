@@ -5,7 +5,9 @@ export default class Square extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            hasMine: false,
+            minesNearby: 0,
+            hasBeenSwept: false,
         };
     }
 
