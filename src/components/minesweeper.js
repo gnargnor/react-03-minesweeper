@@ -1,40 +1,54 @@
 import React from 'react';
 import Minefield from './minefield';
+import MinefieldSetup from '../models/minefieldSetup.js';
 import '../styles/minesweeper.css';
 
 export default class Minesweeper extends React.Component {
   constructor(props) {
+    let shit = {
+      hasMine: false,
+      hasBeenSwept: false,
+      nearbyMines: 0,
+      x: 0,
+      y: 0
+    };
+    let minefield = [[shit, shit, shit, shit, shit, shit, shit, shit, shit, shit],
+                    [shit, shit, shit, shit, shit, shit, shit, shit, shit, shit],
+                    [shit, shit, shit, shit, shit, shit, shit, shit, shit, shit],
+                    [shit, shit, shit, shit, shit, shit, shit, shit, shit, shit],
+                    [shit, shit, shit, shit, shit, shit, shit, shit, shit, shit],
+                    [shit, shit, shit, shit, shit, shit, shit, shit, shit, shit],
+                    [shit, shit, shit, shit, shit, shit, shit, shit, shit, shit],
+                    [shit, shit, shit, shit, shit, shit, shit, shit, shit, shit],
+                    [shit, shit, shit, shit, shit, shit, shit, shit, shit, shit],
+                    [shit, shit, shit, shit, shit, shit, shit, shit, shit, shit],
+                    ];
+    for (let i=0; i<minefield.length; i++){
+      for (let j=0; j<minefield[i].length; j++){
+        let currentSquare = minefield[i][j];
+        currentSquare.hasMine = false;
+        currentSquare.hasBeenSwept = false;
+        currentSquare.nearbyMines = 0;
+        currentSquare.x = j;
+        currentSquare.y = i;
+        console.log (currentSquare);
+      }
+    }
+    console.log(minefield);
     super(props);
     this.state = {
+      counter: 0,
       widthX: 10,
       lengthY: 10,
       numberOfMines: 10,
       flags: 10,
       timer: 0,
-      minefield: Array(10).fill(Array(10).fill({
-        hasMine: false,
-        nearbyMines: 0,
-        hasBeenSwept: false
-      })),
+      minefield: minefield,
     };
   }
   
-
-  plantMines(numberOfMines){
-    let mineLocations = new Set;
-    while (mineLocations.size < 10) {
-      let XY = randomSquare(this.state.widthX, this.state.lengthY);
-      console.log(this.state.minefield[XY[0]][XY[1]].hasMine);
-      this.state.minefield[XY[0]][XY[1]].hasMine = true;
-      mineLocations.add(XY);
-      console.log(mineLocations);
-    }
-  }
-  
-
   render() {
-    this.plantMines(this.state.numberOfMines);
-    console.log(this.state.minefield[4][7].hasMine, this.state.minefield[4][8].hasMine);
+    console.log(this.state.minefield[0][5]);
     return (
       <div className="minesweeper">
         <div className="title">
@@ -55,6 +69,7 @@ let randomSquare = (X, Y) => {
   let XY = [xValue, yValue];
   return XY;
 }
+
 
 
 
