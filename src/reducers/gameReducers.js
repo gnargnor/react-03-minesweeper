@@ -2,19 +2,32 @@ import 'babel-polyfill';
 import * as settings from '../settings';
 import * as types from '../actions/actionTypes';
 
-const initialState = settings.easy;
+const initialSettings = settings.easy;
 
-export default function gameReducer(state = initialState, action) {
+const configureDifficulty = (state, action) => {
+    switch (action.difficulty) {
+        case 'easy':
+            return settings.easy;
+        case 'medium':
+            return settings.medium;
+        case 'hard':
+            return settings.hard;
+        default:
+            return state;
+    }
+};
+
+const gameReducer = (state = initialSettings, action) => {
     switch (action.type) {
         case types.HANDLE_DIFFICULTY_CHANGE:
             return Object.assign(
                     {},
                     state,
-                    {
-                        difficulty: action.difficulty
-                    }
+                    configureDifficulty(undefined, action)
                 );
         default:
             return state;
     }
-}
+};
+
+export default gameReducer;
