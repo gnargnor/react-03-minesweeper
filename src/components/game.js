@@ -33,7 +33,7 @@ class Game extends React.Component {
           </span>
         </div>
         <div className="minefield">
-          <Minefield rows={this.state.minefield} />
+          <Minefield />
         </div>      
       </div>
     );

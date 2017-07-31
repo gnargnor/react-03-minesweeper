@@ -1,7 +1,9 @@
 import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import '../styles/square.css';
 
-export default class Square extends React.Component {
+class Square extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,11 +13,26 @@ export default class Square extends React.Component {
         };
     }
 
+    handleClick(){
+        alert('click');
+    }
+
     render() {
         return (
-            <button className="square">
-                *
-            </button>
-        )
+            <button 
+            className="square"
+            onClick={this.handleClick}
+            />
+        );
     }
 }
+
+function mapStateToProps(state, ownProps) {
+
+}
+
+function mapDispatchToProps(dispatch) {
+    // actions: bindActionCreators(squareActions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Square);
