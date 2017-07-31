@@ -1,36 +1,48 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Square from './square';
 import '../styles/minefield.css';
 
-export default class Row extends React.Component {
+class Row extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
         };
     }
 
-    renderSquare(x) {
+    createSquares(numColumns){
+        const squares = Array(this.props.columns).fill(null);
+        return squares.map((square, index) => this.renderSquare(square, index));
+    }
+
+    renderSquare(square, index) {
         return (
-            <Square
-                value={this.props.squares[x]}
-                onClick={() => this.props.onClick(x)}
-            />
+            <Square />
         );
     }
 
     render() {
         return (
             <div className="row">
-                {this.renderSquare(0)}
-                {this.renderSquare(1)}
-                {this.renderSquare(2)}
-                {this.renderSquare(3)}
-                {this.renderSquare(4)}
-                {this.renderSquare(5)}
-                {this.renderSquare(6)}
-                {this.renderSquare(7)}
-                {this.renderSquare(8)}
+                {this.createSquares(this.props.columns)}
             </div>
         );
     }
 }
+
+function mapStateToProps(state, ownProps){
+    return {
+        columns: state.settings.columns
+    };
+}
+
+function mapDispatchToProps(dispatch){
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Row);
+
+{/* <Square
+    value={this.props.squares[x]}
+    onClick={() => this.props.onClick(x)}
+/> */}

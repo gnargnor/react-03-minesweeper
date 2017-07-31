@@ -17,11 +17,6 @@ class Game extends React.Component {
       <div className="game">
         <div className="title">
           <h1>Minesweeper</h1>
-          <p>Difficulty: {this.props.settings.difficulty}</p>
-          <p>Rows: {this.props.settings.rows}</p>
-          <p>Columns: {this.props.settings.columns}</p>
-          <p>Mines: {this.props.settings.mines}</p>
-          <span>Mega Bomberman's Little Brother</span><br />
         </div>
         <div className="difficulty">
           <span className="level">
@@ -36,6 +31,9 @@ class Game extends React.Component {
             <input type="radio" checked={this.props.settings.difficulty === 'Hard'} value="hard" onChange={this.props.actions.handleDifficultyChange}/>
                 Hard 
           </span>
+        </div>
+        <div className="minefield">
+          <Minefield rows={this.state.minefield} />
         </div>      
       </div>
     );
@@ -56,9 +54,7 @@ function mapDispatchToProps(dispatch){
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
 
-/** <div className="minefield">
-  <Minefield rows={this.state.minefield} />
-</div>        */
+
 
 
 
