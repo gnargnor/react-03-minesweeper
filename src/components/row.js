@@ -11,13 +11,19 @@ class Row extends React.Component {
     }
 
     createSquares(numColumns){
-        const squares = Array(this.props.columns).fill(null);
+        const squareInit = {
+            key: 0,
+            hasMine: false,
+            hasBeenClicked: false,
+            minesNearby: 0
+        };
+        const squares = Array(this.props.columns).fill(squareInit);
         return squares.map((square, index) => this.renderSquare(square, index));
     }
 
     renderSquare(square, index) {
         return (
-            <Square />
+            <Square key={index}/>
         );
     }
 
@@ -37,7 +43,9 @@ function mapStateToProps(state, ownProps){
 }
 
 function mapDispatchToProps(dispatch){
-
+    return {
+        actions: true
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Row);

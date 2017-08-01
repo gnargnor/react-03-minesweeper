@@ -17,6 +17,14 @@ const configureDifficulty = (state, action) => {
     }
 };
 
+const prepareGame = (rows, columns, mines) => {
+    const minefield = Array(rows).fill(Array(columns).fill({
+        hasMine: false,
+        hasBeenChecked: false,
+        minesNearby: 0,
+    }));
+};
+
 const gameReducer = (state = initialSettings, action) => {
     switch (action.type) {
         case types.HANDLE_DIFFICULTY_CHANGE:

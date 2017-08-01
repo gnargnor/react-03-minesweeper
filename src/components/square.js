@@ -7,14 +7,15 @@ class Square extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            hasMine: false,
-            minesNearby: 0,
-            hasBeenSwept: false,
+            
         };
+        this.handleClick = this.handleClick.bind(this);
+
     }
 
-    handleClick(){
-        alert('click');
+    handleClick(e){
+        debugger;
+        alert(`${e.target.key}`);
     }
 
     render() {
@@ -28,11 +29,13 @@ class Square extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-
+    return state;
 }
 
 function mapDispatchToProps(dispatch) {
-    // actions: bindActionCreators(squareActions, dispatch);
+    return {
+        actions: true
+    };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Square);
