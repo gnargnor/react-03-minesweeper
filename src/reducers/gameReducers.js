@@ -9,9 +9,9 @@ const configureDifficulty = (state, action) => {
         case 'easy':
             return {settings: settings.easy, game: prepareGame(settings.easy.rows, settings.easy.columns, settings.easy.mines)};
         case 'medium':
-            return settings.medium;
+            return {settings: settings.medium, game: prepareGame(settings.medium.rows, settings.medium.columns, settings.medium.mines)};
         case 'hard':
-            return settings.hard;
+            return {settings: settings.hard, game: prepareGame(settings.hard.rows, settings.hard.columns, settings.hard.mines)};
         default:
             return state;
     }
@@ -36,18 +36,17 @@ const prepareGame = (numRows, numColumns, totalMines) => {
         });
         return thisRow;
     });
-    console.log('minefield row [2] column [4]!', minefield[2][4]);
     let minesPlaced = 0;
-    while (minesPlaced < totalMines) {
+    for (let minesPlace = 0; minesPlaced < totalMines; minesPlaced++) {
         let currentLocation = minefield[Math.floor(Math.random() * numRows)][Math.floor(Math.random() * numColumns)];
         if (currentLocation.hasMine) {
-            return;
+            minesPlaced--;
         }
         currentLocation.hasMine = true; 
         console.log(currentLocation);
-        minesPlaced++;
     }
     console.log(minefield);
+    return minefield;
 };
 
 const gameReducer = (state = initialSettings, action) => {
