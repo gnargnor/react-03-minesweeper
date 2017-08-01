@@ -17,26 +17,37 @@ const configureDifficulty = (state, action) => {
     }
 };
 
-const prepareGame = (numRows, numColumns, numMines) => {
-    const rows = Array(numRows).fill(null);
-    const minefield = rows.map((row, index) => {
-        const squares = Array(numColumns).fill({
-            row: index + 1,
+const prepareGame = (numRows, numColumns, totalMines) => {
+    let rows = Array(numRows).fill(null);
+    let minefield = rows.map((row, index) => {
+        let squares = Array(numColumns).fill({
+            row: index,
             column: 0,
             hasMine: false,
             hasBeenChecked: false,
             minesNearby: 0
         });
-        const thisRow = squares.map((square, index) => {
+        let thisRow = squares.map((square, index) => {
             return Object.assign(
                 {},
                 square,
-                {column: index + 1}
+                {column: index}
             );
         });
         return thisRow;
     });
-    console.log('minefield row 3 column 5!', minefield[2][4]);
+    console.log('minefield row [2] column [4]!', minefield[2][4]);
+    let minesPlaced = 0;
+    while (minesPlaced < totalMines) {
+        let currentLocation = minefield[Math.floor(Math.random() * numRows)][Math.floor(Math.random() * numColumns)];
+        if (currentLocation.hasMine) {
+            return;
+        }
+        currentLocation.hasMine = true; 
+        console.log(currentLocation);
+        minesPlaced++;
+    }
+    console.log(minefield);
 };
 
 const gameReducer = (state = initialSettings, action) => {
