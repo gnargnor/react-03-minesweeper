@@ -2,21 +2,6 @@ import 'babel-polyfill';
 import * as settings from '../settings';
 import * as types from '../actions/actionTypes';
 
-const initialSettings = settings.easy;
-
-const configureDifficulty = (state, action) => {
-    switch (action.difficulty) {
-        case 'easy':
-            return {settings: settings.easy, game: prepareGame(settings.easy.rows, settings.easy.columns, settings.easy.mines)};
-        case 'medium':
-            return {settings: settings.medium, game: prepareGame(settings.medium.rows, settings.medium.columns, settings.medium.mines)};
-        case 'hard':
-            return {settings: settings.hard, game: prepareGame(settings.hard.rows, settings.hard.columns, settings.hard.mines)};
-        default:
-            return state;
-    }
-};
-
 const prepareGame = (numRows, numColumns, totalMines) => {
     let rows = Array(numRows).fill(null);
     let minefield = rows.map((row, index) => {
@@ -42,12 +27,43 @@ const prepareGame = (numRows, numColumns, totalMines) => {
         if (currentLocation.hasMine) {
             minesPlaced--;
         }
-        currentLocation.hasMine = true; 
-        console.log(currentLocation);
+        currentLocation.hasMine = true;
     }
-    console.log(minefield);
     return minefield;
 };
+
+const initialSettings = Object.assign(
+    {},
+    settings.easy,
+    {minefield: prepareGame(settings.easy.rows, settings.easy.columns, settings.easy.mines)}
+);
+
+const configureDifficulty = (state, action) => {
+    switch (action.difficulty) {
+        case 'easy':
+            return Object.assign(
+                {},
+                settings.easy,
+                {minefield: prepareGame(settings.easy.rows, settings.easy.columns, settings.easy.mines)}
+            );
+        case 'medium':
+            return Object.assign(
+                {},
+                settings.medium, 
+                {minefield: prepareGame(settings.medium.rows, settings.medium.columns, settings.medium.mines)}
+            );
+        case 'hard':
+            return Object.assign(
+                {},
+                settings.hard,
+                {minefield: prepareGame(settings.hard.rows, settings.hard.columns, settings.hard.mines)}
+            );
+        default:
+            return state;
+    }
+};
+
+
 
 const gameReducer = (state = initialSettings, action) => {
     switch (action.type) {
