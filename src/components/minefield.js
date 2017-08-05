@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Row from './row';
 import '../styles/minefield.css';
 
@@ -11,15 +11,14 @@ class Minefield extends React.Component {
         };
     }
 
-    createRows(numRows) {
-        const rows = new Array(numRows).fill(null);
-        return rows.map((row, index) => this.renderRow(row, index));
+    createRows(minefield) {
+        return minefield.map((row, index) => this.renderRow(row, index));
     }
 
     renderRow(row, index) {
         return (
             <span>
-                <Row />
+                <Row key="index"/>
             </span>
         );
     }
@@ -27,19 +26,19 @@ class Minefield extends React.Component {
     render() {
         return (
             <div className="minefield">
-                {this.createRows(this.props.rows)}
+                {this.createRows(this.props.minefield)}
             </div>
         );
     }
 }
 
-function mapStateToProps(state, ownProps){
+function mapStateToProps(state, ownProps) {
     return {
-        rows: state.settings.rows
+        minefield: state.settings.minefield
     };
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
     return {
 
     };
