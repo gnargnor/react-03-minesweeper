@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import '../styles/square.css';
 
-class Square extends React.Component {
+export default class Square extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -28,14 +28,14 @@ class Square extends React.Component {
     }
 }
 
-function mapStateToProps(state, ownProps) {
-    return state;
-}
+// function mapStateToProps(state, ownProps) {
+//     return state;
+// }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: true
-    };
-}
+// function mapDispatchToProps(dispatch) {
+//     return {
+//         actions: true
+//     };
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Square);
+// export default connect(mapStateToProps, mapDispatchToProps)(Square);

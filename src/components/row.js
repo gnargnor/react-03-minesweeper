@@ -7,30 +7,27 @@ class Row extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            
         };
     }
 
-    createSquares(numColumns){
-        const squareInit = {
-            key: 0,
-            hasMine: false,
-            hasBeenClicked: false,
-            minesNearby: 0
-        };
-        const squares = Array(this.props.columns).fill(squareInit);
-        return squares.map((square, index) => this.renderSquare(square, index));
+    createSquares(squares){
+        console.log(squares);
+        return squares.map((square, index) => {
+            return this.renderSquare(square, index);
+        });
     }
 
     renderSquare(square, index) {
         return (
-            <Square key={index}/>
+            <Square square={square} key={index}/>
         );
     }
 
     render() {
         return (
             <div className="row">
-                {this.createSquares(this.props.columns)}
+                {this.createSquares(this.props.squares)}
             </div>
         );
     }
@@ -38,13 +35,13 @@ class Row extends React.Component {
 
 function mapStateToProps(state, ownProps){
     return {
-        columns: state.settings.columns
+        squares: ownProps.row
     };
 }
 
 function mapDispatchToProps(dispatch){
     return {
-        actions: true
+       dispatch
     };
 }
 

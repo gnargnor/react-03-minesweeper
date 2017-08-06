@@ -12,14 +12,15 @@ class Minefield extends React.Component {
     }
 
     createRows(minefield) {
-        return minefield.map((row, index) => this.renderRow(row, index));
+        console.log(minefield);
+        return minefield.map((row, index) => {
+            return this.renderRow(row, index);
+        });
     }
 
     renderRow(row, index) {
         return (
-            <span>
-                <Row key="index"/>
-            </span>
+            <Row row={row} key={index} />
         );
     }
 
@@ -40,7 +41,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-
+        dispatch
     };
 }
 
