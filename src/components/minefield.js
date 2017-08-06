@@ -12,7 +12,6 @@ class Minefield extends React.Component {
     }
 
     createRows(minefield) {
-        console.log(minefield);
         return minefield.map((row, index) => {
             return this.renderRow(row, index);
         });

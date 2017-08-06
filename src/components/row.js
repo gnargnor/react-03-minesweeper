@@ -12,7 +12,6 @@ class Row extends React.Component {
     }
 
     createSquares(squares){
-        console.log(squares);
         return squares.map((square, index) => {
             return this.renderSquare(square, index);
         });

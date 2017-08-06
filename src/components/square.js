@@ -3,39 +3,39 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import '../styles/square.css';
 
-export default class Square extends React.Component {
+class Square extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            
         };
-        this.handleClick = this.handleClick.bind(this);
 
     }
 
     handleClick(e){
-        debugger;
-        alert(`${e.target.key}`);
+        alert(`${this.props.square.hasBeenClicked}`);
     }
 
     render() {
         return (
-            <button 
-            className="square"
-            onClick={this.handleClick}
+            <button
+                className="square"
+                row={this.props.square.row}
             />
+
         );
     }
 }
 
-// function mapStateToProps(state, ownProps) {
-//     return state;
-// }
+function mapStateToProps(state, ownProps) {
+    return {
+        square: ownProps.square
+    };
+}
 
-// function mapDispatchToProps(dispatch) {
-//     return {
-//         actions: true
-//     };
-// }
+function mapDispatchToProps(dispatch) {
+    return {
+        dispatch
+    };
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Square);
+export default connect(mapStateToProps, mapDispatchToProps)(Square);
