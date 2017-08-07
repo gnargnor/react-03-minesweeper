@@ -1,7 +1,6 @@
 import 'babel-polyfill';
 import * as settings from '../settings';
 import * as types from '../actions/actionTypes';
- 
 
 const prepareGame = (numRows, numColumns, totalMines) => {
     let rows = Array(numRows).fill(null);
@@ -86,15 +85,35 @@ const handleClickedSquare = (state, action) => {
 };
 
 const checkNearby = (clickedSquare, minefield, rows, columns) => {
+    const validateRow = (clickedSquare, direction) => {
+        try {
+            switch(direction){
+                case 'north':
+                    return minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][clickedSquare.column];
+                case 'northeast':
+                    return minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined];
+                case 'southeast':
+                    return minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined];
+                case 'south':
+                    return minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][clickedSquare.column];
+                case 'southwest':
+                    return minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined];
+                case 'northwest':
+                    return minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined];
+            }
+        } catch(e){
+            return undefined;
+        }
+    };
     const nearbySquares = {
-        n: minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][clickedSquare.column],
-        ne: minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined],
+        n: validateRow(clickedSquare, 'north'),
+        ne: validateRow(clickedSquare, 'northeast'),
         e: minefield[(clickedSquare.row)][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined],
-        se: minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined],
-        s: minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][clickedSquare.column],
-        sw: minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined],
+        se: validateRow(clickedSquare, 'southeast'),
+        s: validateRow(clickedSquare, 'south'),
+        sw: validateRow(clickedSquare, 'southwest'),
         w: minefield[(clickedSquare.row)][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined],
-        nw: minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined]
+        nw: validateRow(clickedSquare, 'northwest'),
     };
     console.log(Object.values(nearbySquares));
 };
