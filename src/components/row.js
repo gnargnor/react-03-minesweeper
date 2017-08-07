@@ -19,7 +19,7 @@ class Row extends React.Component {
 
     renderSquare(square, index) {
         return (
-            <Square square={square} key={index}/>
+            <Square square={square} key={square.id}/>
         );
     }
 

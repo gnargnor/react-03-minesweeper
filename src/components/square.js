@@ -1,6 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as minefieldActions from '../actions/minefieldActions';
 import '../styles/square.css';
 
 class Square extends React.Component {
@@ -8,20 +9,20 @@ class Square extends React.Component {
         super(props);
         this.state = {
         };
-
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(e){
-        alert(`${this.props.square.hasBeenClicked}`);
+    handleClick(clickedSquare){
+        console.log(clickedSquare);
+        this.props.actions.handleMinefieldClick(clickedSquare);
     }
 
     render() {
         return (
             <button
                 className="square"
-                row={this.props.square.row}
+                onClick={this.handleClick(this.props.square)}
             />
-
         );
     }
 }
@@ -34,7 +35,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        dispatch
+        actions: bindActionCreators(minefieldActions, dispatch)
     };
 }
 

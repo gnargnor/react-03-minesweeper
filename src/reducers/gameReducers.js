@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import * as settings from '../settings';
 import * as types from '../actions/actionTypes';
+ 
 
 const prepareGame = (numRows, numColumns, totalMines) => {
     let rows = Array(numRows).fill(null);
@@ -8,6 +9,7 @@ const prepareGame = (numRows, numColumns, totalMines) => {
         let squares = Array(numColumns).fill({
             row: index,
             column: 0,
+            id: 0,
             hasMine: false,
             hasBeenChecked: false,
             minesNearby: 0
@@ -16,7 +18,8 @@ const prepareGame = (numRows, numColumns, totalMines) => {
             return Object.assign(
                 {},
                 square,
-                {column: index}
+                {column: index,
+                 id: index + (square.row * numRows) }
             );
         });
         return thisRow;
