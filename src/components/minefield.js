@@ -7,7 +7,6 @@ class Minefield extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rowNumber: 0
         };
     }
 

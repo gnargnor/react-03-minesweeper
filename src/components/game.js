@@ -11,7 +11,7 @@ class Game extends React.Component {
     this.state = {
     };
   }
-  
+
   render() {
     return (
       <div className="game">

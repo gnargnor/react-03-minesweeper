@@ -66,6 +66,38 @@ const configureDifficulty = (state, action) => {
     }
 };
 
+const handleClickedSquare = (state, action) => {
+    const clickedSquare = action.clickedSquare;
+    console.log(clickedSquare);
+    if (clickedSquare.hasBeenChecked  || clickedSquare === undefined) {
+        console.log(clickedSquare);
+        return state;
+    }
+    clickedSquare.hasBeenChecked = true;
+    if (clickedSquare.hasMine){
+        alert('BOOM');
+    } else {
+        const minefield = state.minefield;
+        const rows = state.rows;
+        const columns = state.columns;
+        checkNearby(clickedSquare, minefield, rows, columns);  
+    }
+    return clickedSquare;
+};
+
+const checkNearby = (clickedSquare, minefield, rows, columns) => {
+    const nearbySquares = {
+        n: minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][clickedSquare.column],
+        ne: minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined],
+        e: minefield[(clickedSquare.row)][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined],
+        se: minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined],
+        s: minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][clickedSquare.column],
+        sw: minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined],
+        w: minefield[(clickedSquare.row)][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined],
+        nw: minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined]
+    };
+    console.log(Object.values(nearbySquares));
+};
 
 
 const gameReducer = (state = initialSettings, action) => {
@@ -76,6 +108,12 @@ const gameReducer = (state = initialSettings, action) => {
                     state,
                     configureDifficulty(undefined, action)
                 );
+        case types.HANDLE_MINEFIELD_CLICK:
+            return Object.assign(
+                {},
+                state,
+                handleClickedSquare(state, action)
+            )
         default:
             return state;
     }
