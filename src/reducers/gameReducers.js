@@ -67,6 +67,9 @@ const configureDifficulty = (state, action) => {
 
 const handleClickedSquare = (state, action) => {
     const clickedSquare = action.clickedSquare;
+    const minefield = state.minefield;
+    const rows = state.rows;
+    const columns = state.columns;
     console.log(clickedSquare);
     if (clickedSquare.hasBeenChecked  || clickedSquare === undefined) {
         console.log(clickedSquare);
@@ -76,46 +79,60 @@ const handleClickedSquare = (state, action) => {
     if (clickedSquare.hasMine){
         alert('BOOM');
     } else {
-        const minefield = state.minefield;
-        const rows = state.rows;
-        const columns = state.columns;
-        checkNearby(clickedSquare, minefield, rows, columns);  
+        clickedSquare.minesNearby = checkNearby(clickedSquare, minefield, rows, columns);  
     }
+    console.log(minefield[clickedSquare.row][clickedSquare.column]);
     return clickedSquare;
 };
 
 const checkNearby = (clickedSquare, minefield, rows, columns) => {
+    let currentSquare;
     const validateRow = (clickedSquare, direction) => {
         try {
             switch(direction){
                 case 'north':
-                    return minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][clickedSquare.column];
+                    currentSquare = minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][clickedSquare.column];
+                    return currentSquare.hasMine?1:0;
                 case 'northeast':
-                    return minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined];
+                    currentSquare = minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined];
+                    return currentSquare.hasMine?1:0;
+                case 'east':
+                    currentSquare = minefield[(clickedSquare.row)][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined];
+                    return currentSquare.hasMine?1:0;
                 case 'southeast':
-                    return minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined];
+                    currentSquare = minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined];
+                    return currentSquare.hasMine?1:0;
                 case 'south':
-                    return minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][clickedSquare.column];
+                    currentSquare = minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][clickedSquare.column];
+                    return currentSquare.hasMine?1:0;
                 case 'southwest':
-                    return minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined];
+                    currentSquare = minefield[(clickedSquare.row + 1 !== rows)?clickedSquare.row + 1:undefined][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined];
+                    return currentSquare.hasMine?1:0;
+                case 'west':
+                    currentSquare = minefield[(clickedSquare.row)][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined];
+                    return currentSquare.hasMine?1:0;
                 case 'northwest':
-                    return minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined];
+                    currentSquare =  minefield[(clickedSquare.row - 1 > -1)?clickedSquare.row - 1:undefined][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined];
+                    return currentSquare.hasMine?1:0;
             }
         } catch(e){
-            return undefined;
+            return 0;
         }
     };
     const nearbySquares = {
         n: validateRow(clickedSquare, 'north'),
         ne: validateRow(clickedSquare, 'northeast'),
-        e: minefield[(clickedSquare.row)][(clickedSquare.column + 1 !== columns)?clickedSquare.column + 1:undefined],
+        e: validateRow(clickedSquare, 'east'),
         se: validateRow(clickedSquare, 'southeast'),
         s: validateRow(clickedSquare, 'south'),
         sw: validateRow(clickedSquare, 'southwest'),
-        w: minefield[(clickedSquare.row)][(clickedSquare.column - 1 > -1)?clickedSquare.column - 1:undefined],
+        w: validateRow(clickedSquare, 'west'),
         nw: validateRow(clickedSquare, 'northwest'),
     };
-    console.log(Object.values(nearbySquares));
+    let minesNearby = Object.values(nearbySquares);
+    return minesNearby.reduce((a,b) => {
+        return a + b;
+    });
 };
 
 
@@ -128,6 +145,7 @@ const gameReducer = (state = initialSettings, action) => {
                     configureDifficulty(undefined, action)
                 );
         case types.HANDLE_MINEFIELD_CLICK:
+        console.log(state);
             return Object.assign(
                 {},
                 state,
