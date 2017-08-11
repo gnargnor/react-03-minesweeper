@@ -10,10 +10,14 @@
     display: inline-block; 
 }
 
-.menu-item-select {
+.menu-item {
   position: relative;
   margin-left: 8px;
-  display: inline-block;
+  display:inline-block;
+}
+
+.menu-item-select {
+  position: relative;
   border: 0;
   cursor: pointer;
 }
@@ -36,11 +40,18 @@
 
 .game-dropdown {
   background: lightgrey;
+  width: 100px;
+  border: 1px solid darkgrey;
+  padding: 0 10px;
   position: absolute;
 }
 
 .help-dropdown {
   background: lightgrey;
+  width: 100px;
+  display: block;
+  border: 1px solid darkgrey;
+  padding: 0 10px;
   position: absolute;
 }
 .underline {

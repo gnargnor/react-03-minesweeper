@@ -23,20 +23,24 @@ class Menu extends React.Component {
     return(
       <div className="menu-nav">
         <div className="menu">
-          <div className="menu-item-select game" onClick={() => this.props.actions.handleGameClick(this.props.gameDropdown)}><span className="underline">G</span>ame</div>
-          <div className={"game-dropdown-item" + " " + this.props.gameDropdown}>
-            <div className="game-dropdown">
-              <p>Easy</p>
-              <p>Medium</p>
-              <p>Hard</p>
+
+          <div className="menu-item">
+            <div className="menu-item-select" onClick={() => this.props.actions.handleGameClick(this.props.gameDropdown)}><span className="underline">G</span>ame</div>
+            <div className={"game-dropdown-item" + " " + this.props.gameDropdown}>
+              <div className="game-dropdown">
+                <p className="menuItem">Beginner</p>
+                <p className="menuItem">Intermediate</p>
+                <p className="menuItem">Expert</p>
+              </div>
             </div>
           </div>
-
-          <div className="menu-item-select help" onClick={() => this.props.actions.handleHelpClick(this.props.helpDropdown)}><span className="underline">H</span>elp</div>
-          <div className={"help-dropdown-item" + " " + this.props.helpDropdown}>
-            <div className="help-dropdown">
-              <p>Created by Logan Kelly</p>
-              <p>Repository</p>
+          <div className="menu-item">
+            <div className="menu-item-select" onClick={() => this.props.actions.handleHelpClick(this.props.helpDropdown)}><span className="underline">H</span>elp</div>
+            <div className={"help-dropdown-item" + " " + this.props.helpDropdown}>
+              <div className="help-dropdown">
+                <p>Created by Logan Kelly</p>
+                <p>Repository</p>
+              </div>
             </div>
           </div>
         </div>
