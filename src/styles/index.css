@@ -1,4 +1,10 @@
 html, body {
-    font-family: sans-serif;
-    background-color: #dddddd;
+  font: sans-serif; 
+  background-color: white;
+  text-align: center;
+}
+
+#react-app {
+  margin: 0;
+  padding: 0;
 }

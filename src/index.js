@@ -6,8 +6,13 @@ import App from './components/game';
 import configureStore from './store/configureStore';
 import './styles/index.css';
 
-const container = document.getElementById('container');
+const container = document.getElementById('react-app');
 const store = configureStore();
 
 
-ReactDOM.render(<Provider store={store}><App></App></Provider>, container);
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  container
+);

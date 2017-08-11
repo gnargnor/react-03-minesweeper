@@ -1,0 +1,10 @@
+h1 {
+  background: linear-gradient(to right, darkblue, lightblue);
+  color: white;
+  font: 18px Arial;
+  padding: 4px; 
+}
+
+.title {
+  text-align: left;
+}

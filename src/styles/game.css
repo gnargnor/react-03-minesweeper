@@ -1,36 +1,18 @@
 .game {
-    max-width: 1200px;
-    background-color: lightblue;
-    border-radius: 8px;
-    border: 1px solid brown;
-    padding: 20px 10px;
+    /* padding: 20px 10px; */
+    background-color: lightgray;
+    display: inline-block;
+    padding: 6px;
     margin: 0px auto;
     text-align: center
 }
-.title {
-    width: 350px;
-    text-align: center;
-    background-color: whitesmoke;
-    border: 1px solid brown;
-    border-radius: 5px;
-    margin: 0px auto;
-}
 
-h1, span {
-    margin: 0px auto;
-    padding: 10px 0px 0px;
-}
-
-h1 {
-    color: #31416D;
-    font-size: 40px;
-}
-
-span {
+/* span {
     font-size: 20px;
-}
+} */
 
 .difficulty {
+    font-size: 20px;
     margin: 5px auto
 }
 

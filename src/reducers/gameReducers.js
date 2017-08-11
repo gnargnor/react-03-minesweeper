@@ -138,8 +138,9 @@ const handleClickedSquare = (state, action) => {
     clickedSquare.hasBeenChecked = true;
     if (clickedSquare.hasMine){
         alert('BOOM');
+        alert('GAME OVER MUCHACHO!');
     } else {
-        clickedSquare.minesNearby = checkNearby(clickedSquare, minefield, rows, columns);  
+        alert('reveal... the MInes... ha ha HA HA HA HA !');
     }
     console.log(minefield[clickedSquare.row][clickedSquare.column]);
     return clickedSquare;

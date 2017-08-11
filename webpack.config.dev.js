@@ -19,7 +19,12 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.ProvidePlugin({   
+            jQuery: 'jquery',
+            $: 'jquery',
+            jquery: 'jquery'
+        })
     ],
 
     module: {
