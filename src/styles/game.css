@@ -21,6 +21,7 @@
 
 .difficulty {
     text-align: center;
+    height: 30px;
     margin: 0px auto 8px;
     padding: 4px;
     border-top: 3px solid darkgrey;

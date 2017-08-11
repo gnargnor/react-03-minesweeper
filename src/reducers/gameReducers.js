@@ -113,16 +113,16 @@ const prepareGame = (numRows, numColumns, totalMines) => {
         }
         currentLocation.hasMine = true;
     }
-    console.log( minefield );
     let minefieldMap = checkNearby( minefield, numRows, numColumns);
-    console.log(minefieldMap);
     return minefieldMap;
 };
 
 const initialSettings = Object.assign(
     {},
     settings.easy,
-    {minefield: prepareGame(settings.easy.rows, settings.easy.columns, settings.easy.mines)}
+    {minefield: prepareGame(settings.easy.rows, settings.easy.columns, settings.easy.mines),
+     gameDropdown: false,
+     helpDropdown: false}
 );
 
 const handleClickedSquare = (state, action) => {
@@ -130,9 +130,7 @@ const handleClickedSquare = (state, action) => {
     const minefield = state.minefield;
     const rows = state.rows;
     const columns = state.columns;
-    console.log(clickedSquare);
     if (clickedSquare.hasBeenChecked  || clickedSquare === undefined) {
-        console.log(clickedSquare);
         return state;
     }
     clickedSquare.hasBeenChecked = true;
@@ -142,7 +140,6 @@ const handleClickedSquare = (state, action) => {
     } else {
         alert('reveal... the MInes... ha ha HA HA HA HA !');
     }
-    console.log(minefield[clickedSquare.row][clickedSquare.column]);
     return clickedSquare;
 };
 
@@ -153,17 +150,28 @@ const gameReducer = (state = initialSettings, action) => {
     switch (action.type) {
         case types.HANDLE_DIFFICULTY_CHANGE:
             return Object.assign(
-                    {},
-                    state,
-                    configureDifficulty(undefined, action)
-                );
+                {},
+                state,
+                configureDifficulty(undefined, action)
+            );
         case types.HANDLE_MINEFIELD_CLICK:
-        console.log(state);
             return Object.assign(
                 {},
                 state,
                 handleClickedSquare(state, action)
-            )
+            );
+        case types.HANDLE_GAME_CLICK:
+            return Object.assign(
+                {},
+                state,
+                {gameDropdown: !action.gameDropdown}
+            );
+        case types.HANDLE_HELP_CLICK:
+            return Object.assign(
+                {},
+                state,
+                {helpDropdown: !action.helpDropdown}
+            );
         default:
             return state;
     }

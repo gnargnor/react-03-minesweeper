@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as menuActions from '../actions/menuActions';
+import * as gameActions from '../actions/gameActions';
 import '../styles/menuItems.css';
 
 class Menu extends React.Component {
@@ -15,7 +15,7 @@ class Menu extends React.Component {
     this.props.actions.handleGameClick(this.props.gameDropdown);
   }
 
-  handleHelpClick(e){
+  handleHelpClick(){
     this.props.actions.handleHelpClick(this.props.helpDropdown);
   }
 
@@ -28,9 +28,9 @@ class Menu extends React.Component {
             <div className="menu-item-select" onClick={() => this.props.actions.handleGameClick(this.props.gameDropdown)}><span className="underline">G</span>ame</div>
             <div className={"game-dropdown-item" + " " + this.props.gameDropdown}>
               <div className="menu-dropdown">
-                <p className="menu-option">Beginner</p>
-                <p className="menu-option">Intermediate</p>
-                <p className="menu-option">Expert</p>
+                <p className="menu-option" value="easy" onClick={() => this.props.actions.handleDifficultyChange("easy")}>Beginner</p>
+                <p className="menu-option" value="medium" onClick={() => this.props.actions.handleDifficultyChange("medium")}>Intermediate</p>
+                <p className="menu-option" value="difficult" onClick={() => this.props.actions.handleDifficultyChange("hard")}>Expert</p>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(menuActions, dispatch)
+        actions: bindActionCreators(gameActions, dispatch)
     };
 }
 
