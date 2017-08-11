@@ -37,23 +37,25 @@
 .help-dropdown-item {
   display: none;
 }
-
-.game-dropdown {
+.menu-dropdown {
   background: lightgrey;
-  width: 100px;
-  border: 1px solid darkgrey;
-  padding: 0 10px;
-  position: absolute;
-}
-
-.help-dropdown {
-  background: lightgrey;
-  width: 100px;
+  width: 120px;
   display: block;
   border: 1px solid darkgrey;
-  padding: 0 10px;
+  padding: 4px 10px;
   position: absolute;
 }
+
+.menu-option {
+  margin:0;
+  padding:4px;
+  cursor: pointer;
+}
+
+.menu-option:hover {
+  background-color: darkgrey;
+}
+
 .underline {
   text-decoration: underline;
 }

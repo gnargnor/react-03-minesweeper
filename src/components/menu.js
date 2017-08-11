@@ -27,19 +27,19 @@ class Menu extends React.Component {
           <div className="menu-item">
             <div className="menu-item-select" onClick={() => this.props.actions.handleGameClick(this.props.gameDropdown)}><span className="underline">G</span>ame</div>
             <div className={"game-dropdown-item" + " " + this.props.gameDropdown}>
-              <div className="game-dropdown">
-                <p className="menuItem">Beginner</p>
-                <p className="menuItem">Intermediate</p>
-                <p className="menuItem">Expert</p>
+              <div className="menu-dropdown">
+                <p className="menu-option">Beginner</p>
+                <p className="menu-option">Intermediate</p>
+                <p className="menu-option">Expert</p>
               </div>
             </div>
           </div>
           <div className="menu-item">
             <div className="menu-item-select" onClick={() => this.props.actions.handleHelpClick(this.props.helpDropdown)}><span className="underline">H</span>elp</div>
             <div className={"help-dropdown-item" + " " + this.props.helpDropdown}>
-              <div className="help-dropdown">
-                <p>Created by Logan Kelly</p>
-                <p>Repository</p>
+              <div className="menu-dropdown">
+                <p className="menu-option">Created by Logan Kelly</p>
+                <p className="menu-option"><a href="https://www.github.com/gnargnor/react-03-minesweeper">Repository</a></p>
               </div>
             </div>
           </div>
