@@ -16,9 +16,13 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div className="header">
-        <span className="bomb glyphicon glyphicon-asterisk"></span>
-        <h1 className="title">{this.props.title}</h1>
+      <div className="title">
+        <span className="words"><span className="bombImg" />{this.props.title}</span>
+        <span className="useless-buttons">
+          <button className="useless">_</button>
+          <button className="useless">.</button>
+          <button className="useless">X</button>
+        </span>
       </div>
     );
   }

@@ -1,10 +1,27 @@
-h1 {
+
+
+.title {
+  height: 22px;
   background: linear-gradient(to right, darkblue, lightblue);
   color: white;
   font: 18px Arial;
   padding: 4px; 
 }
 
-.title {
-  text-align: left;
+.words {
+  float: left;
+}
+
+.bombImg {
+  background: url('../assets/bomb.jpg');
+  height: 16px;
+  width: 16px;
+}
+
+.useless-buttons {
+  float: right;
+}
+
+.useless {
+  background-color: lightgrey;
 }

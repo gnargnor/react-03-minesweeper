@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Header from './header.js';
+import Menu from './menu';
 import Minefield from './minefield';
 import * as gameActions from '../actions/gameActions';
 import '../styles/game.css';
@@ -17,6 +18,7 @@ class Game extends React.Component {
     return (
       <div className="game">
         <Header title="Minesweeper"/>
+        <Menu />
         <div className="board">
           <div className="difficulty">
             <span className="level">

@@ -23,7 +23,8 @@ module.exports = {
         new webpack.ProvidePlugin({   
             jQuery: 'jquery',
             $: 'jquery',
-            jquery: 'jquery'
+            'window.jQuery': 'jquery',
+            Popper: ['popper.js', 'default'],
         })
     ],
 
@@ -34,6 +35,10 @@ module.exports = {
                 test: /\.js$/,
                 include: path.join(__dirname, 'src'),
                 loaders: ['babel-loader'],
+            },
+            {
+                test:/\.(png|jpg)$/,
+                loader: 'url-loader'
             },
             {
                 test: /\.css$/,

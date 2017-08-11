@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/game';
 import configureStore from './store/configureStore';
+// import 'bootstrap';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.css';
 
 const container = document.getElementById('react-app');

@@ -6,5 +6,5 @@ export function handleDifficultyChange(e){
 }
 
 export function handleMinefieldClick(clickedSquare){
-    return { type: types.HANDLE_MINEFIELD_CLICK, clickedSquare }
+    return { type: types.HANDLE_MINEFIELD_CLICK, clickedSquare };
 }

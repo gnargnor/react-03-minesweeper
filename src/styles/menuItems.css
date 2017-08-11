@@ -1,0 +1,49 @@
+.menu-nav {
+  font: 18px Lucida, serif;
+  text-align: left;
+  padding-top: 4px;
+  padding-bottom:4px;
+  border: 0;
+}
+
+.menu {
+    display: inline-block; 
+}
+
+.menu-item-select {
+  position: relative;
+  margin-left: 8px;
+  display: inline-block;
+  border: 0;
+  cursor: pointer;
+}
+
+.game-dropdown-item.true {
+  display: block;
+}
+
+.game-dropdown-item {
+  display: none;
+}
+
+.help-dropdown-item.true {
+  display: block;
+}
+
+.help-dropdown-item {
+  display: none;
+}
+
+.game-dropdown {
+  background: lightgrey;
+  position: absolute;
+}
+
+.help-dropdown {
+  background: lightgrey;
+  position: absolute;
+}
+.underline {
+  text-decoration: underline;
+}
+
