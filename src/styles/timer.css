@@ -1,0 +1,10 @@
+.timer-background {
+  background: black;
+  color: red;
+  height: 36px;
+  width: 64px;
+  float: left;
+  line-height: 36px;
+  margin: 0 auto;
+  font: 30px Amerian Typewriter, monospace;
+}

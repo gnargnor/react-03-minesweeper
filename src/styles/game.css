@@ -19,9 +19,9 @@
     font-size: 20px;
 } */
 
-.difficulty {
+.status {
     text-align: center;
-    height: 30px;
+    height: 36px;
     margin: 0px auto 8px;
     padding: 4px;
     border-top: 3px solid darkgrey;
