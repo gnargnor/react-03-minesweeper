@@ -21,7 +21,7 @@ class Square extends React.Component {
             <button
                 className="square"
                 onClick={() => this.handleClick(this.props.square)}
-            >{this.props.square.minesNearby}</button>
+            >{this.props.square.hasBeenClicked?this.props.square.minesNearby:""}</button>
         );
     }
 }

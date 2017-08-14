@@ -1,0 +1,10 @@
+.flags-background {
+  background: black;
+  color: red;
+  height: 36px;
+  width: 48px;
+  float: right;
+  line-height: 36px;
+  margin: 0 auto;
+  font: 30px Amerian Typewriter, monospace;
+}

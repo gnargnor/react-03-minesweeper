@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Header from './header.js';
 import Menu from './menu';
 import Timer from './timer';
+import Flags from './flags';
 import Minefield from './minefield';
 import * as gameActions from '../actions/gameActions';
 import '../styles/game.css';
@@ -23,6 +24,7 @@ class Game extends React.Component {
         <div className="board">
           <div className="status">
             <Timer />
+            <Flags />
           </div>
           <div className="minefield">
             <Minefield />
