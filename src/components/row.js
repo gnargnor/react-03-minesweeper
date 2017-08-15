@@ -11,34 +11,41 @@ class Row extends React.Component {
         };
     }
 
-    createSquares(squares){
-        return squares.map((square, index) => {
-            return this.renderSquare(square, index);
-        });
+    createSquares(){
+        let squares = this.props.numColumns;
+        return Array(squares).fill(null).map((square, index) => {
+            return this.renderSquare(square, index)
+        })
+
+        // return squares.map((square, index) => {
+        //     return this.renderSquare(square, index);
+        // });
     }
 
     renderSquare(square, index) {
+        let currentRow = this.props.row;
+        let numColumns = this.props.numColumns;
         return (
-            <Square square={square} key={square.id}/>
+            <Square row={currentRow} column={index} key={currentRow * numColumns + index} id={currentRow * numColumns + index}/>
         );
     }
 
     render() {
         return (
             <div className="row">
-                {this.createSquares(this.props.squares)}
+                {this.createSquares()}
             </div>
         );
     }
 }
 
 function mapStateToProps(state, ownProps){
-    let row = ownProps.row;
-    let minefield = state.settings.minefield;
-    let squares = minefield[row];
-    console.log(squares);
+    // let row = ownProps.row;
+    // let minefield = state.settings.minefield;
+    // let squares = minefield[row];
     return {
-        squares
+        row: ownProps.row,
+        numColumns: state.settings.columns
     };
 }
 

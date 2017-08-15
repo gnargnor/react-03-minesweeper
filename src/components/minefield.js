@@ -11,9 +11,14 @@ class Minefield extends React.Component {
     }
 
     createRows(minefield) {
-        return minefield.map((row, index) => {
+        let rows = this.props.numRows;
+        return Array(rows).fill(null).map((row, index) => {
+            //row is unnecessary to pass as argument, remove later
             return this.renderRow(row, index);
         });
+        // return minefield.map((row, index) => {
+        //     return this.renderRow(row, index);
+        // });
     }
 
     renderRow(row, index) {
@@ -25,7 +30,7 @@ class Minefield extends React.Component {
     render() {
         return (
             <div className="minefield">
-                {this.createRows(this.props.minefield)}
+                {this.createRows()}
             </div>
         );
     }
@@ -33,7 +38,9 @@ class Minefield extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     return {
-        minefield: state.settings.minefield
+        minefield: state.settings.minefield,
+        numRows: state.settings.rows,
+        numColumns: state.settings.columns
     };
 }
 

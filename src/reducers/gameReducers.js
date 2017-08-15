@@ -114,7 +114,8 @@ const prepareGame = (numRows, numColumns, totalMines) => {
         currentLocation.hasMine = true;
     }
     let minefieldMap = checkNearby( minefield, numRows, numColumns);
-    return minefieldMap;
+    let squares = minefieldMap.reduce((a, b) => a.concat(b));
+    return squares;
 };
 
 const initialSettings = Object.assign(
@@ -126,7 +127,8 @@ const initialSettings = Object.assign(
 );
 
 const handleClickedSquare = (state, action) => {
-    const clickedSquare = action.clickedSquare;
+    const clickedSquare = Object.assign({},action.clickedSquare);
+    console.log(clickedSquare);
     const minefield = state.minefield;
     const rows = state.rows;
     const columns = state.columns;
@@ -138,17 +140,16 @@ const handleClickedSquare = (state, action) => {
         alert('BOOM');
         return;
     } else {
-        return [
-            ...minefield.slice(0, clickedSquare.row),
-            [
-                ...minefield[clickedSquare.row].slice(0, clickedSquare.column),
+        return Object.assign(
+            {},
+            state,
+            {minefield: [
+                ...minefield.slice(0, clickedSquare.id),
                 clickedSquare,
-                ...minefield[clickedSquare.row].slice(clickedSquare.column + 1)
-            ],
-            ...minefield.slice(clickedSquare.row + 1)
-        ];
+                ...minefield.slice(clickedSquare.id + 1)
+            ]}
+        );
     }
-    
 };
 
 
@@ -166,6 +167,7 @@ const gameReducer = (state = initialSettings, action) => {
             return Object.assign(
                 {},
                 state,
+                //state: current state or initial settings, action: {type: HANDLE_MINEFIELD_CLICK,  }
                 handleClickedSquare(state, action)
             );
         case types.HANDLE_GAME_CLICK:
