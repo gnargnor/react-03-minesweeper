@@ -12,7 +12,6 @@ class Square extends React.Component {
     }
 
     handleClick(clickedSquare){
-        console.log(clickedSquare);
         return this.props.actions.handleMinefieldClick(clickedSquare);
     }
 
@@ -27,10 +26,9 @@ class Square extends React.Component {
     render() {
         return (
                 <button
-                    className={"square" + " " + this.props.square.hasBeenChecked}
-                    onClick={() => this.handleClick(this.props.minefield[this.props.id])}
-                    value={this.props.minefield[this.props.id].hasBeenChecked?this.props.minefield[this.props.id].minesNearby:""}
-                >{this.props.square.minesNearby}</button>       
+                    className={"square"}
+                    onClick={() => this.handleClick(this.props.square)}
+                >{this.props.square.hasBeenChecked?this.props.square.minesNearby:""}</button>       
         );
     }
 }
@@ -42,9 +40,7 @@ function mapStateToProps(state, ownProps) {
     let minefield = state.settings.minefield;
     let square = minefield[id];
     return {
-        square,
-        minefield,
-        id
+        square
     };
 }
 

@@ -25,8 +25,9 @@ class Row extends React.Component {
     renderSquare(square, index) {
         let currentRow = this.props.row;
         let numColumns = this.props.numColumns;
+        let currentId = (currentRow * numColumns) + index;
         return (
-            <Square row={currentRow} column={index} key={currentRow * numColumns + index} id={currentRow * numColumns + index}/>
+            <Square row={currentRow} column={index} key={currentId} id={currentId}/>
         );
     }
 

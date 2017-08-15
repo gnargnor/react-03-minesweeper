@@ -100,7 +100,7 @@ const prepareGame = (numRows, numColumns, totalMines) => {
                 {},
                 square,
                 {column: index,
-                 id: index + (square.row * numRows) }
+                 id: index + (square.row * numColumns) }
             );
         });
         return thisRow;
