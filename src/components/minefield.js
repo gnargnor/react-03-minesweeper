@@ -18,7 +18,7 @@ class Minefield extends React.Component {
 
     renderRow(row, index) {
         return (
-            <Row row={row} key={index} />
+            <Row row={index} key={index} />
         );
     }
 

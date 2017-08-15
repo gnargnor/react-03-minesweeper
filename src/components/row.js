@@ -33,8 +33,12 @@ class Row extends React.Component {
 }
 
 function mapStateToProps(state, ownProps){
+    let row = ownProps.row;
+    let minefield = state.settings.minefield;
+    let squares = minefield[row];
+    console.log(squares);
     return {
-        squares: ownProps.row
+        squares
     };
 }
 

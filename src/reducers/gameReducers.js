@@ -136,11 +136,19 @@ const handleClickedSquare = (state, action) => {
     clickedSquare.hasBeenChecked = true;
     if (clickedSquare.hasMine){
         alert('BOOM');
-        alert('GAME OVER MUCHACHO!');
+        return;
     } else {
-        alert('reveal... the MInes... ha ha HA HA HA HA !');
+        return [
+            ...minefield.slice(0, clickedSquare.row),
+            [
+                ...minefield[clickedSquare.row].slice(0, clickedSquare.column),
+                clickedSquare,
+                ...minefield[clickedSquare.row].slice(clickedSquare.column + 1)
+            ],
+            ...minefield.slice(clickedSquare.row + 1)
+        ];
     }
-    return clickedSquare;
+    
 };
 
 

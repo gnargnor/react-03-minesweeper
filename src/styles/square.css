@@ -1,5 +1,11 @@
+.clicked {
+    display: inline-block;
+    color: lightgrey;
+}
+
 .square {
     background-color: lightgrey;
+    color: lightgrey;
     border-top: 2px solid white; 
     border-left: 2px solid white; 
     border-bottom: 2px solid grey; 
@@ -11,6 +17,6 @@
     text-align: center;
 }
 
-.square .clicked {
-    background-color: lightgray;
+.square.true {
+    color: black;
 }
