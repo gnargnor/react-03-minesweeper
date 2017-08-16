@@ -8,13 +8,30 @@ class Timer extends React.Component {
   constructor(props){
     super(props);
     this.state = {};
+    this.startTimer = this.startTimer.bind(this);
+    this.getTimer = this.getTimer.bind(this);
+  }
+
+  startTimer(){
+    console.log('click');
+    return this.props.actions.startTimer();
+  }
+
+  getTimer(){
+    console.log
+    function getCurrentTimer(){ return this.props.timer }
+    let timer = setInterval(
+      getCurrentTimer()
+      , 1000
+    );
+    return timer();
   }
 
   render() {
     return (
-      <div className="timer-background">
+      <div className="timer-background" onClick={this.startTimer}>
 
-          {this.props.timer}
+          {this.getTimer}
 
       </div>
     );
@@ -23,7 +40,7 @@ class Timer extends React.Component {
 
 function mapStateToProps(state, ownProps){
   let timer = state.settings.timer;
-  console.log(state.settings);
+  console.log(timer);
   return {
     timer
   };

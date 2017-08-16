@@ -21,3 +21,10 @@ export function handleHelpClick(helpDropdown){
   return {type: types.HANDLE_HELP_CLICK, helpDropdown: helpDropdown};
 }
 
+export function startTimer(){
+  return {type: types.START_TIMER};
+}
+
+export function getTimer(){
+    return {type: types.GET_TIMER};
+}

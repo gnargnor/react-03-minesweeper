@@ -1,6 +1,6 @@
 html, body {
   font: sans-serif; 
-  background: linear-gradient(to right, darkblue, lightblue);
+  background: linear-gradient(to right, darkblue, lightblue); 
   text-align: center;
   height: 100%
 }

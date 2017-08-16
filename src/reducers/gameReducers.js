@@ -130,6 +130,26 @@ const initialSettings = Object.assign(
     }
 );
 
+const startTimer = (state, action) => {
+    let timer = state.timer;
+    console.log(timer);
+
+    function increaseTimer(){
+        timer++;
+    }
+
+    setInterval(
+        increaseTimer(),
+        1000
+    );
+
+    return Object.assign(
+        {},
+        state,
+        {timer: timer}
+    );
+};
+
 const handleClickedSquare = (state, action) => {
     let clickedSquare = Object.assign({}, action.clickedSquare);
     let minefield = [...state.minefield];
@@ -212,6 +232,18 @@ const gameReducer = (state = initialSettings, action) => {
                 state,
                 {helpDropdown: !action.helpDropdown}
             );
+        case types.START_TIMER:
+            return Object.assign(
+                {},
+                state,
+                startTimer(state, action)
+            );
+        // case types.GET_TIMER:
+        //     return Object.assign(
+        //         {},
+        //         state,
+        //         {timer: state.settings.timer }
+        //     );
         default:
             return state;
     }
