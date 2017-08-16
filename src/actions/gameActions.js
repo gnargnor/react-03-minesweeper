@@ -9,6 +9,10 @@ export function handleMinefieldClick(clickedSquare){
     return { type: types.HANDLE_MINEFIELD_CLICK, clickedSquare };
 }
 
+export function handleMinefieldRightClick(rightClickedSquare){
+    return { type: types.HANDLE_MINEFIELD_RIGHT_CLICK, rightClickedSquare }
+}
+
 export function handleGameClick(gameDropdown){
   return {type: types.HANDLE_GAME_CLICK, gameDropdown: gameDropdown};
 }
@@ -16,3 +20,4 @@ export function handleGameClick(gameDropdown){
 export function handleHelpClick(helpDropdown){
   return {type: types.HANDLE_HELP_CLICK, helpDropdown: helpDropdown};
 }
+

@@ -7,35 +7,33 @@ import '../styles/square.css';
 class Square extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        };
+
+        this.handleContextMenu= this.handleContextMenu.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(clickedSquare){
-        return this.props.actions.handleMinefieldClick(clickedSquare);
+    handleClick(e){
+        return this.props.actions.handleMinefieldClick(this.props.square);
     }
 
-    displayOnceClicked(currentSquare){
-        let display = "";
-        if (currentSquare.hasBeenChecked){
-            return display = currentSquare.minesNearby;
-        }
-        return display;
+    handleContextMenu(e){
+        console.log(this.props);
+        e.preventDefault();
+        return this.props.actions.handleMinefieldRightClick(this.props.square);
     }
 
     render() {
         return (
                 <button
-                    className={"square"}
-                    onClick={() => this.handleClick(this.props.square)}
+                    className={"square" + " " + this.props.square.hasBeenChecked}
+                    onClick={this.handleClick}
+                    onContextMenu={this.handleContextMenu}
                 >{this.props.square.hasBeenChecked?this.props.square.minesNearby:""}</button>       
         );
     }
 }
 
 function mapStateToProps(state, ownProps) {
-    let row = ownProps.row;
-    let column = ownProps.column;
     let id = ownProps.id;
     let minefield = state.settings.minefield;
     let square = minefield[id];

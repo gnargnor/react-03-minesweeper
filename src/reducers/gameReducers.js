@@ -93,6 +93,7 @@ const prepareGame = (numRows, numColumns, totalMines) => {
             id: 0,
             hasMine: false,
             hasBeenChecked: false,
+            flagged: false,
             minesNearby: 0
         });
         let thisRow = squares.map((square, index) => {
@@ -127,29 +128,44 @@ const initialSettings = Object.assign(
 );
 
 const handleClickedSquare = (state, action) => {
-    const clickedSquare = Object.assign({},action.clickedSquare);
-    console.log(clickedSquare);
-    const minefield = state.minefield;
-    const rows = state.rows;
-    const columns = state.columns;
+    let clickedSquare = Object.assign({}, action.clickedSquare);
+    let minefield = [...state.minefield];
     if (clickedSquare.hasBeenChecked  || clickedSquare === undefined) {
-        return state;
+        return;
     }
-    clickedSquare.hasBeenChecked = true;
     if (clickedSquare.hasMine){
         alert('BOOM');
         return;
-    } else {
-        return Object.assign(
-            {},
-            state,
-            {minefield: [
-                ...minefield.slice(0, clickedSquare.id),
-                clickedSquare,
-                ...minefield.slice(clickedSquare.id + 1)
-            ]}
-        );
     }
+    clickedSquare.hasBeenChecked = true;
+    return Object.assign(
+        {},
+        state,
+        {minefield: [
+            ...minefield.slice(0, clickedSquare.id),
+            clickedSquare,
+            ...minefield.slice(clickedSquare.id + 1)
+        ]}
+    );
+};
+
+const handleRightClick = (state, action) => {
+    let rightClickedSquare = Object.assign({}, action.rightClickedSquare);
+    let minefield = [...state.minefield];
+    if (rightClickedSquare.hasBeenClicked) {
+        return;
+    }
+    rightClickedSquare.flagged = !rightClickedSquare.flagged;
+    console.log(rightClickedSquare);
+     return Object.assign(
+        {},
+        state,
+        {minefield: [
+            ...minefield.slice(0, rightClickedSquare.id),
+            rightClickedSquare,
+            ...minefield.slice(rightClickedSquare.id + 1)
+        ]}
+    );
 };
 
 
@@ -167,8 +183,13 @@ const gameReducer = (state = initialSettings, action) => {
             return Object.assign(
                 {},
                 state,
-                //state: current state or initial settings, action: {type: HANDLE_MINEFIELD_CLICK,  }
                 handleClickedSquare(state, action)
+            );
+        case types.HANDLE_MINEFIELD_RIGHT_CLICK:
+            return Object.assign(
+                {},
+                state,
+                handleRightClick(state, action)
             );
         case types.HANDLE_GAME_CLICK:
             return Object.assign(

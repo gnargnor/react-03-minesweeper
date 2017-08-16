@@ -17,6 +17,12 @@
     text-align: center;
 }
 
+.square:focus {
+    outline: none
+}
+
 .square.true {
+    background-color: #ccc;
+    border: 2px solid grey;
     color: black;
 }

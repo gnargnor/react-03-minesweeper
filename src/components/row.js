@@ -6,20 +6,13 @@ import '../styles/minefield.css';
 class Row extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            
-        };
     }
 
     createSquares(){
         let squares = this.props.numColumns;
         return Array(squares).fill(null).map((square, index) => {
             return this.renderSquare(square, index)
-        })
-
-        // return squares.map((square, index) => {
-        //     return this.renderSquare(square, index);
-        // });
+        });
     }
 
     renderSquare(square, index) {
@@ -41,9 +34,6 @@ class Row extends React.Component {
 }
 
 function mapStateToProps(state, ownProps){
-    // let row = ownProps.row;
-    // let minefield = state.settings.minefield;
-    // let squares = minefield[row];
     return {
         row: ownProps.row,
         numColumns: state.settings.columns
@@ -57,8 +47,3 @@ function mapDispatchToProps(dispatch){
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Row);
-
-{/* <Square
-    value={this.props.squares[x]}
-    onClick={() => this.props.onClick(x)}
-/> */}

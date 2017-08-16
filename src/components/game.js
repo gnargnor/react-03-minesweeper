@@ -26,9 +26,7 @@ class Game extends React.Component {
             <Timer />
             <Flags />
           </div>
-          <div className="minefield">
             <Minefield />
-          </div>
         </div>      
       </div>
     );
