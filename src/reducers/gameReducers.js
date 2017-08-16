@@ -124,17 +124,25 @@ const initialSettings = Object.assign(
     settings.easy,
     {minefield: prepareGame(settings.easy.rows, settings.easy.columns, settings.easy.mines),
      gameDropdown: false,
-     helpDropdown: false}
+     helpDropdown: false,
+     timer: 0,
+     gameInProgress: false
+    }
 );
 
 const handleClickedSquare = (state, action) => {
     let clickedSquare = Object.assign({}, action.clickedSquare);
     let minefield = [...state.minefield];
+    let gameInProgress = state.gameInProgress;
+    if (!gameInProgress){
+        gameInProgress = true;
+    }
     if (clickedSquare.hasBeenChecked  || clickedSquare === undefined) {
         return;
     }
     if (clickedSquare.hasMine){
         alert('BOOM');
+        gameInProgress = false;
         return;
     }
     clickedSquare.hasBeenChecked = true;
@@ -145,7 +153,8 @@ const handleClickedSquare = (state, action) => {
             ...minefield.slice(0, clickedSquare.id),
             clickedSquare,
             ...minefield.slice(clickedSquare.id + 1)
-        ]}
+        ],
+        gameInProgress}
     );
 };
 
