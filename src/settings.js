@@ -16,5 +16,5 @@ export const hard = {
     difficulty: 'Hard',
     rows: 16,
     columns: 40,
-    mines: 100
+    mines: 99
 };

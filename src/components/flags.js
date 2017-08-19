@@ -13,9 +13,7 @@ class Timer extends React.Component {
   render() {
     return (
       <div className="flags-background">
-
           {this.props.totalMines - this.props.flagsPlaced}
-
       </div>
     );
   }

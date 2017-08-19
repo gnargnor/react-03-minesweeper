@@ -3,8 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Header from './header.js';
 import Menu from './menu';
-import Timer from './timer';
 import Flags from './flags';
+import Timer from './timer';
+import Smiley from './smiley';
 import Minefield from './minefield';
 import * as gameActions from '../actions/gameActions';
 import '../styles/game.css';
@@ -23,8 +24,10 @@ class Game extends React.Component {
         <Menu />
         <div className="board">
           <div className="status">
-            <Timer />
             <Flags />
+            <Smiley />
+            <Timer />
+            
           </div>
             <Minefield />
         </div>      

@@ -1,10 +1,14 @@
 .flags-background {
   background: black;
   color: red;
-  height: 36px;
-  width: 48px;
-  float: right;
-  line-height: 36px;
+  height: 32px;
+  width: 64px;
+  float: left;
+  line-height: 32px;
   margin: 0 auto;
+  border-top: 2px solid grey;
+  border-left: 2px solid grey;
+  border-bottom: 2px solid white;
+  border-right: 2px solid white;
   font: 30px Amerian Typewriter, monospace;
 }

@@ -33,10 +33,10 @@ class Square extends React.Component {
     displaySquare() {
         let currentSquare = this.props.square;
         if (currentSquare.hasBeenChecked) {
-            return currentSquare.hasMine ? "B" : currentSquare.minesNearby;
+            return currentSquare.hasMine ? "💣" : currentSquare.minesNearby;
         }
         if (!currentSquare.hasBeenChecked) {
-            return currentSquare.flagged ? "F" : "";
+            return currentSquare.flagged ? "🚩" : "";
         }
     }
 

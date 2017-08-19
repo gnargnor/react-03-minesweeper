@@ -29,7 +29,7 @@ const configureDifficulty = (state, action) => {
 
 const checkNearby = (minefield, rows, columns) => {
     let currentSquare;
-    const validateRow = (clickedSquare, direction) => {
+    const validateSquare = (clickedSquare, direction) => {
         try {
             switch(direction){
                 case 'north':
@@ -65,14 +65,14 @@ const checkNearby = (minefield, rows, columns) => {
     return minefield.map(row => {
         return row.map(square => {
             const nearbySquares = {
-                n: validateRow(square, 'north'),
-                ne: validateRow(square, 'northeast'),
-                e: validateRow(square, 'east'),
-                se: validateRow(square, 'southeast'),
-                s: validateRow(square, 'south'),
-                sw: validateRow(square, 'southwest'),
-                w: validateRow(square, 'west'),
-                nw: validateRow(square, 'northwest'),
+                n: validateSquare(square, 'north'),
+                ne: validateSquare(square, 'northeast'),
+                e: validateSquare(square, 'east'),
+                se: validateSquare(square, 'southeast'),
+                s: validateSquare(square, 'south'),
+                sw: validateSquare(square, 'southwest'),
+                w: validateSquare(square, 'west'),
+                nw: validateSquare(square, 'northwest'),
             };
             let minesNearby = Object.values(nearbySquares);
             return Object.assign(
@@ -145,7 +145,6 @@ const handleClickedSquare = (state, action) => {
         return;
     }
     if (clickedSquare.hasMine){
-        alert('BOOM');
         gameInProgress = false;
     }
     clickedSquare.hasBeenChecked = true;

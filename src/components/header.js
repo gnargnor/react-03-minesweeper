@@ -17,7 +17,7 @@ class Header extends React.Component {
   render() {
     return (
       <div className="title">
-        <span className="words"><span className="bombImg" />{this.props.title}</span>
+        <span className="words">{this.props.title}</span>
         <span className="useless-buttons">
           <button className="useless">_</button>
           <button className="useless">.</button>
