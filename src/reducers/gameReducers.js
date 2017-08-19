@@ -100,8 +100,10 @@ const prepareGame = (numRows, numColumns, totalMines) => {
             return Object.assign(
                 {},
                 square,
-                {column: index,
-                 id: index + (square.row * numColumns) }
+                {
+                    column: index,
+                    id: index + (square.row * numColumns)
+                }
             );
         });
         return thisRow;
@@ -125,30 +127,12 @@ const initialSettings = Object.assign(
     {minefield: prepareGame(settings.easy.rows, settings.easy.columns, settings.easy.mines),
      gameDropdown: false,
      helpDropdown: false,
-     timer: 0,
-     gameInProgress: false
+     time: 0,
+     endTime: 0,
+     gameInProgress: false,
+     interval: null
     }
 );
-
-const startTimer = (state, action) => {
-    let timer = state.timer;
-    console.log(timer);
-
-    function increaseTimer(){
-        timer++;
-    }
-
-    setInterval(
-        increaseTimer(),
-        1000
-    );
-
-    return Object.assign(
-        {},
-        state,
-        {timer: timer}
-    );
-};
 
 const handleClickedSquare = (state, action) => {
     let clickedSquare = Object.assign({}, action.clickedSquare);
@@ -206,7 +190,7 @@ const gameReducer = (state = initialSettings, action) => {
             return Object.assign(
                 {},
                 state,
-                configureDifficulty(undefined, action)
+                configureDifficulty(undefined, action)       
             );
         case types.HANDLE_MINEFIELD_CLICK:
             return Object.assign(
@@ -224,26 +208,18 @@ const gameReducer = (state = initialSettings, action) => {
             return Object.assign(
                 {},
                 state,
-                {gameDropdown: !action.gameDropdown}
+                {
+                    gameDropdown: !action.gameDropdown
+                }
             );
         case types.HANDLE_HELP_CLICK:
             return Object.assign(
                 {},
                 state,
-                {helpDropdown: !action.helpDropdown}
+                {
+                    helpDropdown: !action.helpDropdown
+                }
             );
-        case types.START_TIMER:
-            return Object.assign(
-                {},
-                state,
-                startTimer(state, action)
-            );
-        // case types.GET_TIMER:
-        //     return Object.assign(
-        //         {},
-        //         state,
-        //         {timer: state.settings.timer }
-        //     );
         default:
             return state;
     }

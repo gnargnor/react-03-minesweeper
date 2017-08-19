@@ -34,8 +34,9 @@ class Game extends React.Component {
 }
 
 function mapStateToProps(state, ownProps){
+  let gameInProgress = state.settings.gameInProgress;
   return {
-    settings: state.settings
+    gameInProgress
   };
 }
 

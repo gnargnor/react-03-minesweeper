@@ -2,7 +2,8 @@
   background: black;
   color: red;
   height: 36px;
-  width: 64px;
+  /* width: 64px; */
+  width: 100px;
   float: left;
   line-height: 36px;
   margin: 0 auto;
