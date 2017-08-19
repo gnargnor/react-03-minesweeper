@@ -7,9 +7,9 @@ import '../styles/square.css';
 class Square extends React.Component {
     constructor(props) {
         super(props);
-
         this.handleContextMenu= this.handleContextMenu.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.displaySquare = this.displaySquare.bind(this);
     }
 
     handleClick(e){
@@ -22,13 +22,23 @@ class Square extends React.Component {
         return this.props.actions.handleMinefieldRightClick(this.props.square);
     }
 
+    displaySquare() {
+        let currentSquare = this.props.square;
+        if (currentSquare.hasBeenChecked) {
+            return currentSquare.hasMine ? "B" : currentSquare.minesNearby;
+        }
+        if (!currentSquare.hasBeenChecked) {
+            return currentSquare.flagged ? "F" : "";
+        }
+    }
+
     render() {
         return (
                 <button
                     className={"square" + " " + this.props.square.hasBeenChecked}
                     onClick={this.handleClick}
                     onContextMenu={this.handleContextMenu}
-                >{this.props.square.hasBeenChecked?this.props.square.minesNearby:""}</button>       
+                >{this.displaySquare()}</button>       
         );
     }
 }
@@ -49,5 +59,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Square);
-
-// {this.props.minefield[this.props.square.row][this.props.square.column].hasBeenClicked?this.props.minefield[this.props.square.row][this.props.square.column].minesNearby:""}
