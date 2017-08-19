@@ -13,12 +13,20 @@ class Square extends React.Component {
     }
 
     handleClick(e){
+        let currentSquare = this.props.square;
+        if (currentSquare.flagged){
+            return;
+        }
         return this.props.actions.handleMinefieldClick(this.props.square);
     }
 
     handleContextMenu(e){
-        console.log(this.props);
         e.preventDefault();
+        let currentSquare = this.props.square;
+        if (currentSquare.hasBeenChecked){
+            return;
+        }
+        console.log(this.props);
         return this.props.actions.handleMinefieldRightClick(this.props.square);
     }
 
