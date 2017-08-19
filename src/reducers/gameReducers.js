@@ -130,7 +130,7 @@ const initialSettings = Object.assign(
      time: 0,
      endTime: 0,
      gameInProgress: false,
-     interval: null
+     flagsPlaced: 0
     }
 );
 
@@ -147,7 +147,6 @@ const handleClickedSquare = (state, action) => {
     if (clickedSquare.hasMine){
         alert('BOOM');
         gameInProgress = false;
-        return;
     }
     clickedSquare.hasBeenChecked = true;
     return Object.assign(
@@ -165,19 +164,25 @@ const handleClickedSquare = (state, action) => {
 const handleRightClick = (state, action) => {
     let rightClickedSquare = Object.assign({}, action.rightClickedSquare);
     let minefield = [...state.minefield];
-    if (rightClickedSquare.hasBeenClicked) {
+    let flagsPlaced = state.flagsPlaced;
+    let totalMines = state.mines;
+    if (rightClickedSquare.hasBeenClicked || flagsPlaced === totalMines) {
         return;
     }
     rightClickedSquare.flagged = !rightClickedSquare.flagged;
-    console.log(rightClickedSquare);
+    ++flagsPlaced;
+    console.log(rightClickedSquare, flagsPlaced);
      return Object.assign(
         {},
         state,
-        {minefield: [
-            ...minefield.slice(0, rightClickedSquare.id),
-            rightClickedSquare,
-            ...minefield.slice(rightClickedSquare.id + 1)
-        ]}
+        {
+            minefield: [
+                ...minefield.slice(0, rightClickedSquare.id),
+                rightClickedSquare,
+                ...minefield.slice(rightClickedSquare.id + 1)
+            ],
+            flagsPlaced
+        }
     );
 };
 
