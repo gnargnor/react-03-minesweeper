@@ -109,7 +109,7 @@ const prepareGame = (numRows, numColumns, totalMines) => {
         return thisRow;
     });
     let minesPlaced = 0;
-    for (let minesPlace = 0; minesPlaced < totalMines; minesPlaced++) {
+    for (let minesPlaced = 0; minesPlaced < totalMines; minesPlaced++) {
         let currentLocation = minefield[Math.floor(Math.random() * numRows)][Math.floor(Math.random() * numColumns)];
         if (currentLocation.hasMine) {
             minesPlaced--;
@@ -130,25 +130,27 @@ const initialSettings = Object.assign(
      time: 0,
      endTime: 0,
      gameInProgress: false,
+     gameOver:false,
      flagsPlaced: 0
     }
 );
+
+
 
 const handleClickedSquare = (state, action) => {
     let clickedSquare = Object.assign({}, action.clickedSquare);
     let minefield = [...state.minefield];
     let gameInProgress = state.gameInProgress;
+    let gameOver = state.gameOver;
     if (!gameInProgress){
         gameInProgress = true;
     }
     if (clickedSquare.hasBeenChecked  || clickedSquare === undefined) {
         return;
     }
-    if (clickedSquare.hasMine){
-        gameInProgress = false;
-    }
     clickedSquare.hasBeenChecked = true;
-    return Object.assign(
+    if (!clickedSquare.hasMine) {
+        return Object.assign(
         {},
         state,
         {minefield: [
@@ -157,7 +159,23 @@ const handleClickedSquare = (state, action) => {
             ...minefield.slice(clickedSquare.id + 1)
         ],
         gameInProgress}
-    );
+        );
+    } else {
+        // gameOver = true;
+        // gameInProgress = false;
+        return Object.assign(
+        {},
+        state,
+        {minefield: [
+            ...minefield.slice(0, clickedSquare.id),
+            clickedSquare,
+            ...minefield.slice(clickedSquare.id + 1)
+        ],
+        gameInProgress : false,
+        gameOver: true}
+        );
+    }
+    
 };
 
 const handleRightClick = (state, action) => {
@@ -169,18 +187,16 @@ const handleRightClick = (state, action) => {
         return;
     }
     rightClickedSquare.flagged = !rightClickedSquare.flagged;
-    ++flagsPlaced;
-    console.log(rightClickedSquare, flagsPlaced);
+    flagsPlaced += 1;
      return Object.assign(
         {},
         state,
-        {
-            minefield: [
-                ...minefield.slice(0, rightClickedSquare.id),
-                rightClickedSquare,
-                ...minefield.slice(rightClickedSquare.id + 1)
-            ],
-            flagsPlaced
+        { minefield: [
+            ...minefield.slice(0, rightClickedSquare.id),
+            rightClickedSquare,
+            ...minefield.slice(rightClickedSquare.id + 1)
+        ],
+        flagsPlaced
         }
     );
 };
@@ -212,17 +228,13 @@ const gameReducer = (state = initialSettings, action) => {
             return Object.assign(
                 {},
                 state,
-                {
-                    gameDropdown: !action.gameDropdown
-                }
+                { gameDropdown: !action.gameDropdown } 
             );
         case types.HANDLE_HELP_CLICK:
             return Object.assign(
                 {},
                 state,
-                {
-                    helpDropdown: !action.helpDropdown
-                }
+                { helpDropdown: !action.helpDropdown }
             );
         default:
             return state;

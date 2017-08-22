@@ -32,11 +32,15 @@ class Square extends React.Component {
 
     displaySquare() {
         let currentSquare = this.props.square;
-        if (currentSquare.hasBeenChecked) {
+        let gameOver = this.props.gameOver;
+        if (currentSquare.hasBeenChecked && this.props.gameOver) {
             return currentSquare.hasMine ? "💣" : currentSquare.minesNearby;
         }
-        if (!currentSquare.hasBeenChecked) {
+        if (!currentSquare.hasBeenChecked && !gameOver) {
             return currentSquare.flagged ? "🚩" : "";
+        }
+        if (gameOver && !currentSquare.hasBeenChecked) {
+            return currentSquare.hasMine ? "💣" : "";
         }
     }
 
@@ -55,6 +59,7 @@ function mapStateToProps(state, ownProps) {
     let id = ownProps.id;
     let minefield = state.settings.minefield;
     let square = minefield[id];
+    let gameOver = state.settings.gameOver;
     return {
         square
     };
