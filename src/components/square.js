@@ -33,7 +33,8 @@ class Square extends React.Component {
     displaySquare() {
         let currentSquare = this.props.square;
         let gameOver = this.props.gameOver;
-        if (currentSquare.hasBeenChecked && this.props.gameOver) {
+        if (currentSquare.hasBeenChecked) {
+            console.log('has been checked, game not over baby')
             return currentSquare.hasMine ? "💣" : currentSquare.minesNearby;
         }
         if (!currentSquare.hasBeenChecked && !gameOver) {

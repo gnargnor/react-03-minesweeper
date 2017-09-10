@@ -160,20 +160,20 @@ const handleClickedSquare = (state, action) => {
         ],
         gameInProgress}
         );
-    } else {
-        // gameOver = true;
-        // gameInProgress = false;
-        return Object.assign(
-        {},
-        state,
-        {minefield: [
-            ...minefield.slice(0, clickedSquare.id),
-            clickedSquare,
-            ...minefield.slice(clickedSquare.id + 1)
-        ],
-        gameInProgress : false,
-        gameOver: true}
-        );
+    // } else {
+    //     // gameOver = true;
+    //     // gameInProgress = false;
+    //     return Object.assign(
+    //     {},
+    //     state,
+    //     {minefield: [
+    //         ...minefield.slice(0, clickedSquare.id),
+    //         clickedSquare,
+    //         ...minefield.slice(clickedSquare.id + 1)
+    //     ],
+    //     gameInProgress : false,
+    //     gameOver: true}
+    //     );
     }
     
 };
@@ -213,6 +213,7 @@ const gameReducer = (state = initialSettings, action) => {
                 configureDifficulty(undefined, action)       
             );
         case types.HANDLE_MINEFIELD_CLICK:
+        console.log(state, action);
             return Object.assign(
                 {},
                 state,
