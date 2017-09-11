@@ -3,6 +3,7 @@ import * as settings from '../settings';
 import * as types from '../actions/actionTypes';
 
 const configureDifficulty = (state, action) => {
+    console.log(action.difficulty);
     switch (action.difficulty) {
         case 'easy':
             return Object.assign(
@@ -228,7 +229,7 @@ const gameReducer = (state = initialSettings, action) => {
         case types.HANDLE_GAME_CLICK:
             return Object.assign(
                 {},
-                state,
+                initialSettings,
                 { gameDropdown: !action.gameDropdown } 
             );
         case types.HANDLE_HELP_CLICK:
@@ -237,6 +238,14 @@ const gameReducer = (state = initialSettings, action) => {
                 state,
                 { helpDropdown: !action.helpDropdown }
             );
+        case types.HANDLE_SMILEY_CLICK:
+        console.log('smileyyyy:', typeof state.difficulty);
+            return Object.assign(
+                {},
+                state,
+                configureDifficulty(undefined, state)
+            );
+        
         default:
             return state;
     }

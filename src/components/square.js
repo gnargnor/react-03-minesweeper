@@ -26,7 +26,6 @@ class Square extends React.Component {
         if (currentSquare.hasBeenChecked){
             return;
         }
-        console.log(this.props);
         return this.props.actions.handleMinefieldRightClick(this.props.square);
     }
 
@@ -34,7 +33,6 @@ class Square extends React.Component {
         let currentSquare = this.props.square;
         let gameOver = this.props.gameOver;
         if (currentSquare.hasBeenChecked) {
-            console.log('has been checked, game not over baby')
             return currentSquare.hasMine ? "💣" : currentSquare.minesNearby;
         }
         if (!currentSquare.hasBeenChecked && !gameOver) {

@@ -20,3 +20,7 @@ export function handleGameClick(gameDropdown){
 export function handleHelpClick(helpDropdown){
   return {type: types.HANDLE_HELP_CLICK, helpDropdown: helpDropdown};
 }
+
+export function handleSmileyClick(){
+    return {type: types.HANDLE_SMILEY_CLICK };
+}
