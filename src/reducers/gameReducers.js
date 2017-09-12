@@ -229,7 +229,7 @@ const gameReducer = (state = initialSettings, action) => {
         case types.HANDLE_GAME_CLICK:
             return Object.assign(
                 {},
-                initialSettings,
+                state,
                 { gameDropdown: !action.gameDropdown } 
             );
         case types.HANDLE_HELP_CLICK:
