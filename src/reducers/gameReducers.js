@@ -210,8 +210,9 @@ const gameReducer = (state = initialSettings, action) => {
         case types.HANDLE_DIFFICULTY_CHANGE:
             return Object.assign(
                 {},
-                state,
-                configureDifficulty(undefined, action)       
+                initialSettings,
+                configureDifficulty(undefined, action),
+                { gameDropdown: !action.gameDropdown }       
             );
         case types.HANDLE_MINEFIELD_CLICK:
         console.log(state, action);

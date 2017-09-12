@@ -1,8 +1,9 @@
 import * as types from './actionTypes';
 
-export function handleDifficultyChange(e){
-    const difficulty = e;
-    return { type: types.HANDLE_DIFFICULTY_CHANGE, difficulty: difficulty };
+export function handleDifficultyChange(gameObject){
+    let difficulty = gameObject.difficulty;
+    let gameDropdown = gameObject.gameDropdown;
+    return { type: types.HANDLE_DIFFICULTY_CHANGE, difficulty, gameDropdown };
 }
 
 export function handleMinefieldClick(clickedSquare){

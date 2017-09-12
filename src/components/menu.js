@@ -28,9 +28,9 @@ class Menu extends React.Component {
             <div className="menu-item-select" onClick={() => this.props.actions.handleGameClick(this.props.gameDropdown)}><span className="underline">G</span>ame</div>
             <div className={"game-dropdown-item" + " " + this.props.gameDropdown}>
               <div className="menu-dropdown">
-                <p className="menu-option" value="easy" onClick={() => this.props.actions.handleDifficultyChange("easy")}>Beginner</p>
-                <p className="menu-option" value="medium" onClick={() => this.props.actions.handleDifficultyChange("medium")}>Intermediate</p>
-                <p className="menu-option" value="difficult" onClick={() => this.props.actions.handleDifficultyChange("hard")}>Expert</p>
+                <p className="menu-option" value="easy" onClick={() => this.props.actions.handleDifficultyChange({difficulty: "easy", gameDropdown: this.props.gameDropdown})}>Beginner</p>
+                <p className="menu-option" value="medium" onClick={() => this.props.actions.handleDifficultyChange({difficulty: "medium", gameDropdown: this.props.gameDropdown})}>Intermediate</p>
+                <p className="menu-option" value="difficult" onClick={() => this.props.actions.handleDifficultyChange({difficulty: "hard", gameDropdown: this.props.gameDropdown})}>Expert</p>
               </div>
             </div>
           </div>
@@ -50,9 +50,10 @@ class Menu extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
+  console.log(state.settings.gameDropdown);
     return {
-        gameDropdown: state.menu.gameDropdown,
-        helpDropdown: state.menu.helpDropdown
+        gameDropdown: state.settings.gameDropdown,
+        helpDropdown: state.settings.helpDropdown
     };
 }
 
