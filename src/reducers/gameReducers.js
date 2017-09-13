@@ -3,20 +3,65 @@ import * as settings from '../settings/settings';
 import * as types from '../actions/actionTypes';
 
 const initialSettings = Object.assign(
-    {},
-    settings.easy,
-    {minefield: prepareGame(settings.easy),
-     gameDropdown: false,
-     helpDropdown: false,
-     time: 0,
-     endTime: 0,
-     gameInProgress: false,
-     gameOver:false,
-     flagsPlaced: 0
-    }
-  );
+  {},
+  settings.easy,
+  {
+    minefield: prepareGame(settings.easy),
+    gameDropdown: false,
+    helpDropdown: false,
+    time: 0,
+    endTime: 0,
+    gameInProgress: false,
+    gameOver:false,
+    flagsPlaced: 0
+  }
+);
 
-const configureDifficulty = (state, action) => {
+const gameReducer = (state = initialSettings, action) => {
+  switch (action.type) {
+    case types.HANDLE_DIFFICULTY_CHANGE:
+      return Object.assign(
+        {},
+        initialSettings,
+        configureDifficulty(undefined, action),
+        { gameDropdown: !action.gameDropdown }       
+      );
+    case types.HANDLE_MINEFIELD_CLICK:
+      return Object.assign(
+        {},
+        state,
+        handleClickedSquare(state, action)
+      );
+    case types.HANDLE_MINEFIELD_RIGHT_CLICK:
+      return Object.assign(
+        {},
+        state,
+        handleRightClick(state, action)
+      );
+    case types.HANDLE_GAME_CLICK:
+      return Object.assign(
+        {},
+        state,
+        { gameDropdown: !action.gameDropdown, helpDropdown: false }
+      );
+    case types.HANDLE_HELP_CLICK:
+      return Object.assign(
+        {},
+        state,
+        { helpDropdown: !action.helpDropdown, gameDropdown: false }
+      );
+    case types.HANDLE_SMILEY_CLICK:
+      return Object.assign(
+        {},
+        state,
+        configureDifficulty(undefined, state)
+      );
+    default:
+      return state;
+  }
+};
+
+function configureDifficulty (state, action) {
     var gameSettings;
     switch (action.difficulty) {
         case 'easy':
@@ -43,7 +88,7 @@ const configureDifficulty = (state, action) => {
         default:
             return state;
     }
-};
+}
 
 function checkNearby (minefield, rows, columns) {
     let currentSquare;
@@ -144,7 +189,7 @@ function prepareGame (gameSettings) {
 
 
 
-const handleClickedSquare = (state, action) => {
+function handleClickedSquare (state, action) {
     let clickedSquare = Object.assign({}, action.clickedSquare);
     let minefield = [...state.minefield];
     let gameInProgress = state.gameInProgress;
@@ -183,9 +228,9 @@ const handleClickedSquare = (state, action) => {
     //     );
     }
     
-};
+}
 
-const handleRightClick = (state, action) => {
+function handleRightClick (state, action) {
     let rightClickedSquare = Object.assign({}, action.rightClickedSquare);
     let minefield = [...state.minefield];
     let flagsPlaced = state.flagsPlaced;
@@ -206,56 +251,6 @@ const handleRightClick = (state, action) => {
         flagsPlaced
         }
     );
-};
-
-
-
-
-const gameReducer = (state = initialSettings, action) => {
-    switch (action.type) {
-        case types.HANDLE_DIFFICULTY_CHANGE:
-            return Object.assign(
-                {},
-                initialSettings,
-                configureDifficulty(undefined, action),
-                { gameDropdown: !action.gameDropdown }       
-            );
-        case types.HANDLE_MINEFIELD_CLICK:
-        console.log(state, action);
-            return Object.assign(
-                {},
-                state,
-                handleClickedSquare(state, action)
-            );
-        case types.HANDLE_MINEFIELD_RIGHT_CLICK:
-            return Object.assign(
-                {},
-                state,
-                handleRightClick(state, action)
-            );
-        case types.HANDLE_GAME_CLICK:
-            return Object.assign(
-                {},
-                state,
-                { gameDropdown: !action.gameDropdown } 
-            );
-        case types.HANDLE_HELP_CLICK:
-            return Object.assign(
-                {},
-                state,
-                { helpDropdown: !action.helpDropdown }
-            );
-        case types.HANDLE_SMILEY_CLICK:
-        console.log('smileyyyy:', typeof state.difficulty);
-            return Object.assign(
-                {},
-                state,
-                configureDifficulty(undefined, state)
-            );
-        
-        default:
-            return state;
-    }
-};
+}
 
 export default gameReducer;
