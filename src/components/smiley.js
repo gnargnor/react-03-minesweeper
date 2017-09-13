@@ -11,7 +11,6 @@ class Smiley extends React.Component {
 }
 
   handleSmileyClick() {
-    console.log('handleSmileyClick');
     return this.props.actions.handleSmileyClick();
   }
 
@@ -28,7 +27,7 @@ class Smiley extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {

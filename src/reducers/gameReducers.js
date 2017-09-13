@@ -1,6 +1,20 @@
 import 'babel-polyfill';
-import * as settings from '../settings';
+import * as settings from '../settings/settings';
 import * as types from '../actions/actionTypes';
+
+const initialSettings = Object.assign(
+    {},
+    settings.easy,
+    {minefield: prepareGame(settings.easy),
+     gameDropdown: false,
+     helpDropdown: false,
+     time: 0,
+     endTime: 0,
+     gameInProgress: false,
+     gameOver:false,
+     flagsPlaced: 0
+    }
+  );
 
 const configureDifficulty = (state, action) => {
     var gameSettings;
@@ -31,7 +45,7 @@ const configureDifficulty = (state, action) => {
     }
 };
 
-const checkNearby = (minefield, rows, columns) => {
+function checkNearby (minefield, rows, columns) {
     let currentSquare;
     const validateSquare = (clickedSquare, direction) => {
         try {
@@ -88,7 +102,7 @@ const checkNearby = (minefield, rows, columns) => {
     }); 
 };
 
-const prepareGame = (gameSettings) => {
+function prepareGame (gameSettings) {
     let { rows, columns, mines } = gameSettings;
     let gameRows = Array(rows).fill(null);
     let minefield = gameRows.map((row, index) => {
@@ -127,20 +141,6 @@ const prepareGame = (gameSettings) => {
     console.log(minefieldMap);
     return squares;
 };
-
-const initialSettings = Object.assign(
-    {},
-    settings.easy,
-    {minefield: prepareGame(settings.easy),
-     gameDropdown: false,
-     helpDropdown: false,
-     time: 0,
-     endTime: 0,
-     gameInProgress: false,
-     gameOver:false,
-     flagsPlaced: 0
-    }
-);
 
 
 
