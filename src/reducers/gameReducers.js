@@ -134,7 +134,9 @@ function prepareGame(gameSettings) {
 }
 
 function handleClickedSquare(state, action) {
-  let clickedSquare = Object.assign({}, action.clickedSquare);
+  // let clickedSquare = Object.assign({}, action.clickedSquare);
+  let clickedSquare = action.clickedSquare;
+  let returnedSquare = Object.assign({}, clickedSquare);
   let minefield = [...state.minefield];
   let gameInProgress = state.gameInProgress;
   let gameOver = state.gameOver;
@@ -144,7 +146,7 @@ function handleClickedSquare(state, action) {
   if (clickedSquare.hasBeenChecked || clickedSquare === undefined) {
     return;
   }
-  clickedSquare.hasBeenChecked = true;
+  returnedSquare.hasBeenChecked = true;
   if (!clickedSquare.hasMine) {
     return Object.assign(
       {},
@@ -152,7 +154,7 @@ function handleClickedSquare(state, action) {
       {
         minefield: [
           ...minefield.slice(0, clickedSquare.id),
-          clickedSquare,
+          returnedSquare,
           ...minefield.slice(clickedSquare.id + 1)
         ],
         gameInProgress
