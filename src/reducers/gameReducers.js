@@ -3,25 +3,28 @@ import * as settings from '../settings';
 import * as types from '../actions/actionTypes';
 
 const configureDifficulty = (state, action) => {
-    console.log(action.difficulty);
+    var gameSettings;
     switch (action.difficulty) {
         case 'easy':
+            gameSettings = settings.easy;
             return Object.assign(
                 {},
-                settings.easy,
-                {minefield: prepareGame(settings.easy.rows, settings.easy.columns, settings.easy.mines)}
+                gameSettings,
+                {minefield: prepareGame(gameSettings)}
             );
         case 'medium':
+            gameSettings = settings.medium;
             return Object.assign(
                 {},
-                settings.medium, 
-                {minefield: prepareGame(settings.medium.rows, settings.medium.columns, settings.medium.mines)}
+                gameSettings, 
+                {minefield: prepareGame(gameSettings)}
             );
         case 'hard':
+            gameSettings = settings.hard;
             return Object.assign(
                 {},
-                settings.hard,
-                {minefield: prepareGame(settings.hard.rows, settings.hard.columns, settings.hard.mines)}
+                gameSettings,
+                {minefield: prepareGame(gameSettings)}
             );
         default:
             return state;
@@ -85,10 +88,11 @@ const checkNearby = (minefield, rows, columns) => {
     }); 
 };
 
-const prepareGame = (numRows, numColumns, totalMines) => {
-    let rows = Array(numRows).fill(null);
-    let minefield = rows.map((row, index) => {
-        let squares = Array(numColumns).fill({
+const prepareGame = (gameSettings) => {
+    let { rows, columns, mines } = gameSettings;
+    let gameRows = Array(rows).fill(null);
+    let minefield = gameRows.map((row, index) => {
+        let squares = Array(columns).fill({
             row: index,
             column: 0,
             id: 0,
@@ -103,29 +107,31 @@ const prepareGame = (numRows, numColumns, totalMines) => {
                 square,
                 {
                     column: index,
-                    id: index + (square.row * numColumns)
+                    id: index + (square.row * columns)
                 }
             );
         });
         return thisRow;
     });
     let minesPlaced = 0;
-    for (let minesPlaced = 0; minesPlaced < totalMines; minesPlaced++) {
-        let currentLocation = minefield[Math.floor(Math.random() * numRows)][Math.floor(Math.random() * numColumns)];
+    let limit = mines;
+    for (let minesPlaced = 0; minesPlaced < limit; minesPlaced++) {
+        let currentLocation = minefield[Math.floor(Math.random() * rows)][Math.floor(Math.random() * columns)];
         if (currentLocation.hasMine) {
             minesPlaced--;
         }
         currentLocation.hasMine = true;
     }
-    let minefieldMap = checkNearby( minefield, numRows, numColumns);
+    let minefieldMap = checkNearby( minefield, rows, columns);
     let squares = minefieldMap.reduce((a, b) => a.concat(b));
+    console.log(minefieldMap);
     return squares;
 };
 
 const initialSettings = Object.assign(
     {},
     settings.easy,
-    {minefield: prepareGame(settings.easy.rows, settings.easy.columns, settings.easy.mines),
+    {minefield: prepareGame(settings.easy),
      gameDropdown: false,
      helpDropdown: false,
      time: 0,
