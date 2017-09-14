@@ -1,28 +1,28 @@
 .clicked {
-    display: inline-block;
-    color: lightgrey;
+  display: inline-block;
+  color: lightgrey;
 }
 
 .square {
-    background-color: lightgrey;
-    color: black;
-    border-top: 2px solid white; 
-    border-left: 2px solid white; 
-    border-bottom: 2px solid grey; 
-    border-right: 2px solid grey; 
-    height: 30px;
-    width: 30px;
-    line-height: 30px;
-    font-size: 18px;
-    text-align: center;
+  background-color: lightgrey;
+  color: black;
+  border-top: 2px solid white; 
+  border-left: 2px solid white; 
+  border-bottom: 2px solid grey; 
+  border-right: 2px solid grey; 
+  height: 30px;
+  width: 30px;
+  line-height: 30px;
+  font-size: 18px;
+  text-align: center;
 }
 
 .square:focus {
-    outline: none
+  outline: none
 }
 
 .square.true {
-    background-color: #ccc;
-    border: 2px solid grey;
-    color: black;
+  background-color: #ccc;
+  border: 2px solid grey;
+  color: black;
 }
