@@ -7,7 +7,7 @@ import minefield from './minefieldReducers';
 const rootReducer = combineReducers({
     settings,
     menu,
-    // minefield
+    minefield
 });
 
 export default rootReducer;
