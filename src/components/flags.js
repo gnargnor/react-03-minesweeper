@@ -1,10 +1,9 @@
 import React from 'react';
-import * as gameActions from '../actions/gameActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import '../styles/flags.css';
 
-class Timer extends React.Component {
+class Flags extends React.Component {
   constructor(props){
     super(props);
     this.state = {};
@@ -28,9 +27,7 @@ function mapStateToProps(state, ownProps){
   }
 }
 
-function mapDispatchToProps(dispatch){
-  return bindActionCreators(gameActions, dispatch);
-}
+const mapDispatchToProps = {};
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Timer);
+export default connect(mapStateToProps, mapDispatchToProps)(Flags);

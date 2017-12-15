@@ -1,5 +1,4 @@
 import 'babel-polyfill';
-import * as types from '../actions/actionTypes';
 
 const initialState = {
   gameDropdown: false,
@@ -8,13 +7,13 @@ const initialState = {
 
 const menuReducer = (state = initialState, action) => {
   switch (action.type){
-    case types.HANDLE_GAME_CLICK:
+    case HANDLE_GAME_CLICK:
       return Object.assign(
         {},
         state,
         {gameDropdown: !action.gameDropdown}
       );
-    case types.HANDLE_HELP_CLICK:
+    case HANDLE_HELP_CLICK:
       return Object.assign(
         {},
         state,
@@ -26,3 +25,14 @@ const menuReducer = (state = initialState, action) => {
 };
 
 export default menuReducer;
+
+const HANDLE_GAME_CLICK = 'HANDLE_GAME_CLICK';
+const HANDLE_HELP_CLICK = 'HANDLE_HELP_CLICK';
+
+export const handleGameClick = (gameDropdown) => {
+  return {type: HANDLE_GAME_CLICK, gameDropdown: gameDropdown};
+}
+
+export const handleHelpClick = (helpDropdown) => {
+  return {type: HANDLE_HELP_CLICK, helpDropdown: helpDropdown};
+}

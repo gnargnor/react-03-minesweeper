@@ -1,7 +1,10 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as gameActions from '../actions/gameActions';
+import {
+  handleMinefieldClick,
+  handleMinefieldRightClick
+} from '../reducers/gameReducers';
 import '../styles/square.css';
 
 class Square extends React.Component {
@@ -17,7 +20,7 @@ class Square extends React.Component {
         if (currentSquare.flagged){
             return;
         }
-        return this.props.actions.handleMinefieldClick(this.props.square);
+        return this.props.handleMinefieldClick(this.props.square);
     }
 
     handleContextMenu(e){
@@ -26,7 +29,7 @@ class Square extends React.Component {
         if (currentSquare.hasBeenChecked){
             return;
         }
-        return this.props.actions.handleMinefieldRightClick(this.props.square);
+        return this.props.handleMinefieldRightClick(this.props.square);
     }
 
     displaySquare() {
@@ -64,10 +67,9 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(gameActions, dispatch)
-    };
-}
+const mapDispatchToProps = {
+  handleMinefieldClick,
+  handleMinefieldRightClick
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Square);

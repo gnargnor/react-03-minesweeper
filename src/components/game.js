@@ -7,7 +7,12 @@ import Flags from './flags';
 import Timer from './timer';
 import Smiley from './smiley';
 import Minefield from './minefield';
-import * as gameActions from '../actions/gameActions';
+import {
+  handleDifficultyChange,
+  handleMinefieldClick,
+  handleMinefieldRightClick,
+  handleSmileyClick
+} from '../reducers/gameReducers';
 import '../styles/game.css';
 
 class Game extends React.Component {
@@ -43,11 +48,12 @@ function mapStateToProps(state, ownProps){
   };
 }
 
-function mapDispatchToProps(dispatch){
-  return {
-    actions: bindActionCreators(gameActions, dispatch)
-  };
-}
+const mapDispatchToProps = {
+  handleDifficultyChange,
+  handleMinefieldClick,
+  handleMinefieldRightClick,
+  handleSmileyClick
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
 
