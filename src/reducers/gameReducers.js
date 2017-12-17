@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import * as settings from '../settings/settings';
 
+
 const initialSettings = Object.assign(
   {},
   settings.easy,
@@ -18,13 +19,6 @@ const initialSettings = Object.assign(
 
 const gameReducer = (state = initialSettings, action) => {
   switch (action.type) {
-    case HANDLE_DIFFICULTY_CHANGE:
-      return Object.assign(
-        {},
-        initialSettings,
-        configureDifficulty(undefined, action),
-        { gameDropdown: !action.gameDropdown }
-      );
     case HANDLE_MINEFIELD_CLICK:
       return Object.assign(
         {},
@@ -43,6 +37,25 @@ const gameReducer = (state = initialSettings, action) => {
         state,
         configureDifficulty(undefined, state)
       );
+    case HANDLE_DIFFICULTY_CHANGE:
+      return Object.assign(
+        {},
+        initialSettings,
+        configureDifficulty(undefined, action),
+        { gameDropdown: false }
+      );
+    case HANDLE_GAME_CLICK:
+      return Object.assign(
+        {},
+        state,
+        {gameDropdown: !state.gameDropdown}
+      );
+    case HANDLE_HELP_CLICK:
+      return Object.assign(
+        {},
+        state,
+        {helpDropdown: !state.helpDropdown}
+      );
     default:
       return state;
   }
@@ -54,20 +67,16 @@ export default gameReducer;
 
 /** ------------------------------------------------------------------ */
 
-const HANDLE_DIFFICULTY_CHANGE = 'HANDLE_DIFFICULTY_CHANGE';
 const HANDLE_MINEFIELD_CLICK = 'HANDLE_MINEFIELD_CLICK';
 const HANDLE_MINEFIELD_RIGHT_CLICK = 'HANDLE_MINEFIELD_RIGHT_CLICK';
 const HANDLE_SMILEY_CLICK = 'HANDLE_SMILEY_CLICK';
+const HANDLE_DIFFICULTY_CHANGE = 'HANDLE_DIFFICULTY_CHANGE';
+const HANDLE_GAME_CLICK = 'HANDLE_GAME_CLICK';
+const HANDLE_HELP_CLICK = 'HANDLE_HELP_CLICK';
 const START_TIMER = 'START_TIMER';
 const STOP_TIMER = 'STOP_TIMER';
 const TICK = 'TICK';
 const CLEAR_INTERVAL = 'CLEAR_INTERVAL';
-
-export const handleDifficultyChange = (gameObject) => {
-  let difficulty = gameObject.difficulty;
-  let gameDropdown = gameObject.gameDropdown;
-  return { type: HANDLE_DIFFICULTY_CHANGE, difficulty, gameDropdown };
-}
 
 export const handleMinefieldClick = (clickedSquare) => {
   return { type: HANDLE_MINEFIELD_CLICK, clickedSquare };
@@ -81,29 +90,39 @@ export const handleSmileyClick = () => {
   return {type: HANDLE_SMILEY_CLICK };
 }
 
+export const handleDifficultyChange = (gameObject) => {
+  let difficulty = gameObject.difficulty;
+  let gameDropdown = gameObject.gameDropdown;
+  return { type: HANDLE_DIFFICULTY_CHANGE, difficulty, gameDropdown };
+}
+
+export const handleGameClick = () => {
+  return {type: HANDLE_GAME_CLICK};
+}
+
+export const handleHelpClick = () => {
+  return {type: HANDLE_HELP_CLICK};
+}
+
 function configureDifficulty(state, action) {
-  var gameSettings;
   switch (action.difficulty) {
     case 'easy':
-      gameSettings = settings.easy;
       return Object.assign(
         {},
-        gameSettings,
-        { minefield: prepareGame(gameSettings) }
+        settings.easy,
+        { minefield: prepareGame(settings.easy) }
       );
     case 'medium':
-      gameSettings = settings.medium;
       return Object.assign(
         {},
-        gameSettings,
-        { minefield: prepareGame(gameSettings) }
+        settings.medium,
+        { minefield: prepareGame(settings.medium) }
       );
     case 'hard':
-      gameSettings = settings.hard;
       return Object.assign(
         {},
-        gameSettings,
-        { minefield: prepareGame(gameSettings) }
+        settings.hard,
+        { minefield: prepareGame(settings.hard) }
       );
     default:
       return state;
@@ -256,8 +275,8 @@ function handleRightClick(state, action) {
   if (rightClickedSquare.hasBeenClicked || flagsPlaced === totalMines) {
     return;
   }
+  flagsPlaced = rightClickedSquare.flagged ? flagsPlaced - 1 : flagsPlaced + 1;
   rightClickedSquare.flagged = !rightClickedSquare.flagged;
-  flagsPlaced += 1;
   return Object.assign(
     {},
     state,

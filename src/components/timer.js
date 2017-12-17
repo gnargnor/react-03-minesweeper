@@ -5,13 +5,21 @@ import '../styles/timer.css';
 class Timer extends React.Component {
   constructor(props){
     super(props);
-    this.state = {};
+    this.state = {
+      time: 0
+    };
+    this.startTimer = this.startTimer.bind(this);
+  }
+
+  startTimer () {
+    let tick = this.setState({time: time + 1})
+    return setTimeout(tick, 1000);
   }
 
   render() {
     return (
       <div className="timer-background" onClick={!this.props.gameInProgress ? this.startTimer : this.stopTimer}>
-          {this.props.time}
+          {this.state.time}
       </div>
     );
   }

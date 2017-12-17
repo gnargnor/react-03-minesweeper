@@ -7,10 +7,11 @@ import Timer from './timer';
 import Smiley from './smiley';
 import Minefield from './minefield';
 import {
-  handleDifficultyChange,
   handleMinefieldClick,
   handleMinefieldRightClick,
-  handleSmileyClick
+  handleSmileyClick,
+  handleGameClick,
+  handleHelpClick
 } from '../reducers/gameReducers';
 import '../styles/game.css';
 
@@ -19,11 +20,23 @@ class Game extends React.Component {
     super(props);
     this.state = {
     };
+    this.handleMouseUp = this.handleMouseUp.bind(this);
+  }
+
+  handleMouseUp (e) {
+    let {handleGameClick, handleHelpClick, gameDropdown, helpDropdown} = this.props;
+    let dropdownElements = [...document.querySelectorAll('.menu-tag')];
+    if (gameDropdown && !dropdownElements.filter((item) => item === e.target).length) {
+      return handleGameClick();
+    }
+    if(helpDropdown && !dropdownElements.filter((item) => item === e.target).length) {
+      return handleHelpClick();
+    }
   }
 
   render() {
     return (
-      <div className="game">
+      <div className="game" onMouseUp={this.handleMouseUp}>
         <Header title="Minesweeper"/>
         <Menu />
         <div className="board">
@@ -31,7 +44,6 @@ class Game extends React.Component {
             <Flags />
             <Smiley />
             <Timer />
-            
           </div>
             <Minefield />
         </div>      
@@ -41,17 +53,20 @@ class Game extends React.Component {
 }
 
 function mapStateToProps(state, ownProps){
-  let gameInProgress = state.settings.gameInProgress;
+  let {gameInProgress, gameDropdown, helpDropdown} = state.settings;
   return {
-    gameInProgress
+    gameInProgress,
+    gameDropdown,
+    helpDropdown
   };
 }
 
 const mapDispatchToProps = {
-  handleDifficultyChange,
   handleMinefieldClick,
   handleMinefieldRightClick,
-  handleSmileyClick
+  handleSmileyClick,
+  handleGameClick,
+  handleHelpClick
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
