@@ -6,31 +6,51 @@ class Timer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      time: 0
+      start: new Date(),
+      elapsed: 0,
+      gameInProgress: false
     };
     this.startTimer = this.startTimer.bind(this);
+    this.tick = this.tick.bind(this);
   }
 
   startTimer () {
-    let tick = this.setState({time: time + 1})
-    return setTimeout(tick, 1000);
+      this.timer = setInterval(this.tick, 50);
+      this.setState({start: new Date, gameInProgress: true});
+  }
+
+  stopTimer (time) {
+    this.setState({gameInProgress: false});
+    clearInterval(this.timer);
+  }
+
+  tick () {
+    let {start} = this.state;
+    this.setState({elapsed: new Date() - start});
   }
 
   render() {
+    let elapsed = Math.floor(this.state.elapsed / 100);
+    let seconds = (elapsed / 10).toFixed(0);
     return (
-      <div className="timer-background" onClick={!this.props.gameInProgress ? this.startTimer : this.stopTimer}>
-          {this.state.time}
+      <div 
+        className="timer-background"
+        onClick={!this.state.gameInProgress 
+          ? () => this.startTimer() 
+          : () => this.stopTimer(seconds)}
+      >
+          {seconds}
       </div>
     );
   }
 }
 
 function mapStateToProps(state, ownProps){
-  let time = state.settings.time;
-  let gameInProgress = state.settings.gameInProgress;
+  let {start, elapsed, gameInProgress} = state.settings;
   return {
-    time,
-    gameInProgress,
+    start,
+    elapsed,
+    gameInProgress
   };
 }
 
