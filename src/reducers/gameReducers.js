@@ -9,10 +9,9 @@ const initialSettings = Object.assign(
     minefield: prepareGame(settings.easy),
     gameDropdown: false,
     helpDropdown: false,
-    start: new Date (),
-    elapsed: 0,
-    endTime: 0,
     gameInProgress: false,
+    start: 0,
+    finalTime: 0,
     gameOver: false,
     flagsPlaced: 0
   }
@@ -57,6 +56,18 @@ const gameReducer = (state = initialSettings, action) => {
         state,
         {helpDropdown: !state.helpDropdown}
       );
+    case START_GAME:
+      return Object.assign(
+        {},
+        state,
+        {gameInProgress: true, gameOver: false, start: new Date()},
+      );
+    case STOP_GAME:
+      return Object.assign(
+        {},
+        state,
+        {gameInProgress: false, gameOver: true, finalTime: (Math.round(new Date() - state.start) / 1000).toFixed(0)}
+      )
     default:
       return state;
   }
@@ -64,20 +75,15 @@ const gameReducer = (state = initialSettings, action) => {
 
 export default gameReducer;
 
-
-
-/** ------------------------------------------------------------------ */
-
+// Actions
 const HANDLE_MINEFIELD_CLICK = 'HANDLE_MINEFIELD_CLICK';
 const HANDLE_MINEFIELD_RIGHT_CLICK = 'HANDLE_MINEFIELD_RIGHT_CLICK';
 const HANDLE_SMILEY_CLICK = 'HANDLE_SMILEY_CLICK';
 const HANDLE_DIFFICULTY_CHANGE = 'HANDLE_DIFFICULTY_CHANGE';
 const HANDLE_GAME_CLICK = 'HANDLE_GAME_CLICK';
 const HANDLE_HELP_CLICK = 'HANDLE_HELP_CLICK';
-const START_TIMER = 'START_TIMER';
-const STOP_TIMER = 'STOP_TIMER';
-const TICK = 'TICK';
-const CLEAR_INTERVAL = 'CLEAR_INTERVAL';
+const START_GAME = 'START_GAME';
+const STOP_GAME = 'STOP_GAME';
 
 export const handleMinefieldClick = (clickedSquare) => {
   return { type: HANDLE_MINEFIELD_CLICK, clickedSquare };
@@ -103,6 +109,19 @@ export const handleGameClick = () => {
 
 export const handleHelpClick = () => {
   return {type: HANDLE_HELP_CLICK};
+}
+
+export const startGame = () => {
+  return {type: START_GAME}
+}
+
+export const stopGame = () => {
+  return {type: STOP_GAME}
+}
+
+// Game Logic
+function tick () {
+
 }
 
 function configureDifficulty(state, action) {
