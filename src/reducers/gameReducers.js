@@ -233,14 +233,6 @@ function handleClickedSquare(state, action) {
   }
 }
 
-column: 16
-flagged: false
-hasBeenChecked: true
-hasMine: false
-id: 216
-minesNearby: 3
-row: 5
-
 function handleSquareClick (state, action) {
   const {
     id,
@@ -269,14 +261,15 @@ function handleSquareClick (state, action) {
 
   // does the square have a bomb?
   if (hasMine) {
-
+    return endGame(state, action);
   }
   // how many squares nearby have bombs?
   let mines = countNearby(state, action);
   // if there are no bombs, open nearby squares
   if (!mines) {
-
+    return scanNearby(state, action);
   }
+  return renderSquare(state, action);
 }
 
 // p = possibility, e = eligible, r = rowClicked, c = columnClicked
@@ -351,7 +344,7 @@ function scanNearby (state, action) {
       scanNearby(state, recursedSquare);
     }
   });
-  Promise.all(scans);
+  return Promise.all(scans);
 }
 
 
