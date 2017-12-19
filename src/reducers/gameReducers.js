@@ -35,7 +35,8 @@ const gameReducer = (state = initialSettings, action) => {
       return Object.assign(
         {},
         state,
-        configureDifficulty(undefined, state)
+        configureDifficulty(undefined, state),
+        {gameInProgress: false, gameOver: false}
       );
     case HANDLE_DIFFICULTY_CHANGE:
       return Object.assign(
@@ -190,6 +191,8 @@ function prepareGame(gameSettings) {
 
 function handleClickedSquare(state, action) {
   let clickedSquare = Object.assign({}, action.clickedSquare);
+  console.log(clickedSquare);
+  console.log(state.rows, state.columns, state.mines);
   let minefield = [...state.minefield];
   let gameInProgress = state.gameInProgress;
   let gameOver = state.gameOver;
@@ -229,6 +232,129 @@ function handleClickedSquare(state, action) {
     //     );
   }
 }
+
+column: 16
+flagged: false
+hasBeenChecked: true
+hasMine: false
+id: 216
+minesNearby: 3
+row: 5
+
+function handleSquareClick (state, action) {
+  const {
+    id,
+    row, 
+    column,
+    flagged,
+    hasBeenChecked,
+    hasMine,
+    minesNearby
+  } = action.clickedSquare; // our square
+  const minefield = [...state.minefield];
+  const gameInProgress = state.gameInProgress;
+  const gameOver = state.gameOver; // our state
+  /**
+   * @todo rewrite logic for checking the squares to work recursively
+   */
+
+  // is the game already in progress? start the timer
+  if (!gameInProgress) {
+
+  }
+  // is the game already over? square been clicked? flagged?
+  if (gameOver || hasBeenChecked || flagged) {
+    return;
+  }
+
+  // does the square have a bomb?
+  if (hasMine) {
+
+  }
+  // how many squares nearby have bombs?
+  let mines = countNearby(state, action);
+  // if there are no bombs, open nearby squares
+  if (!mines) {
+
+  }
+}
+
+// p = possibility, e = eligible, r = rowClicked, c = columnClicked
+function countNearby (state, action) {
+  const {row: r, column: c} = action.clickedSquare;
+  const {rows: numRows, columns: numColumns, minefield} = state;
+  const plusOne = num => num + 1;
+  const minusOne = num => num -1;
+  const returnNum = num => num;
+  // array of possible adjacent squares
+  const ps = [
+    [plusOne, plusOne],
+    [plusOne, returnNum],
+    [plusOne, minusOne],
+    [returnNum, plusOne],
+    [returnNum, minusOne],
+    [minusOne, plusOne],
+    [minusOne, returnNum],
+    [minusOne, plusOne]
+  ];
+  return ps.filter(p => {
+    // filter out ineligible positions
+    let xFunc = p[0], yFunc = p[1];
+    return (0 <= xFunc(c) < numCols && 0 <= yFunc(r) < numRows);
+  }).map(e => {
+    // get coordinates of eligible squares
+    let xFunc = e[0], yFunc = e[1];
+    return {x: xFunc(c), y: yFunc(r)};
+  }).reduce(mines, coords => {
+    // return number of squares nearby with mines
+    let {x, y} = coords;
+    return mines + minefield[x][y].hasMine ? 1 : 0;
+  }, 0);
+}
+
+// returns a map of the eligible nearby squares nearby mine count
+function scanNearby (state, action) {
+  const {row: r, column: c} = action.clickedSquare;
+  const {rows: numRows, columns: numColumns, minefield} = state;
+  const plusOne = num => num + 1;
+  const minusOne = num => num -1;
+  const returnNum = num => num;
+  // array of possible adjacent squares
+  const ps = [
+    [plusOne, plusOne],
+    [plusOne, returnNum],
+    [plusOne, minusOne],
+    [returnNum, plusOne],
+    [returnNum, minusOne],
+    [minusOne, plusOne],
+    [minusOne, returnNum],
+    [minusOne, plusOne]
+  ];
+  let scans = ps.filter(p => {
+    // filter out ineligible positions
+    let xFunc = p[0], yFunc = p[1];
+    return (0 <= xFunc(c) < numCols && 0 <= yFunc(r) < numRows);
+  }).map(e => {
+    // get coordinates of eligible squares
+    let xFunc = e[0], yFunc = e[1];
+    return {x: xFunc(c), y: yFunc(r)};
+  }).map(coords => {
+    // open the eligible squares
+    let {x, y} = coords;
+    minefield[x][y].hasBeenChecked = true;
+    let recursedSquare = {
+      row: y,
+      column: x
+    };
+    minefield[x][y].minesNearby = countNearby(state, recursedSquare);
+    if (!minefield[x][y].minesNearby) {
+      scanNearby(state, recursedSquare);
+    }
+  });
+  Promise.all(scans);
+}
+
+
 
 function checkNearby(minefield, rows, columns) {
   let currentSquare;
